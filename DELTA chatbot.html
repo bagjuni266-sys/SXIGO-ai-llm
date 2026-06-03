@@ -1,0 +1,2379 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DELTA AI Chatbot - 현대식 AI 챗봇</title>
+        <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --dark-bg: #05080f;
+            --card-bg: rgba(18, 24, 40, 0.92);
+            --accent: #88a6ff;
+            --accent-light: #b2c6ff;
+            --text-primary: #ffffff;
+            --text-secondary: #b0c4ff;
+            --border-color: rgba(255, 255, 255, 0.18);
+            --shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+            --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.2);
+            --error-color: #ff6b6b;
+            --success-color: #51cf66;
+            --warning-color: #ffd93d;
+        }
+
+        html,
+        body {
+            width: 100%;
+            min-height: 100%;
+            background: radial-gradient(circle at top left, rgba(102, 126, 234, 0.18), transparent 22%),
+                        radial-gradient(circle at bottom right, rgba(245, 87, 108, 0.16), transparent 22%),
+                        linear-gradient(180deg, #070b13 0%, #0f1626 100%);
+            color: var(--text-primary);
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: radial-gradient(circle at 20% 20%, rgba(102, 126, 234, 0.14), transparent 24%),
+                              radial-gradient(circle at 80% 15%, rgba(245, 87, 108, 0.14), transparent 24%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .chat-wrapper {
+            display: flex;
+            width: 100%;
+            height: 100vh;
+            gap: 18px;
+            padding: 20px;
+        }
+
+        .chat-sidebar {
+            width: 360px;
+            min-width: 320px;
+            background: rgba(12, 18, 32, 0.92);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 28px;
+            box-shadow: var(--shadow-soft);
+            display: flex;
+            flex-direction: column;
+            padding: 28px;
+            overflow-y: auto;
+            backdrop-filter: blur(18px);
+        }
+
+        .chat-sidebar-header {
+            margin-bottom: 28px;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #8b94ff, #f5576c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+            letter-spacing: -0.6px;
+        }
+
+        .subtitle {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .new-chat-btn {
+            width: 100%;
+            padding: 14px 18px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 16px;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            font-size: 0.98rem;
+        }
+
+        .new-chat-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 38px rgba(102, 126, 234, 0.28);
+        }
+
+        .chat-history {
+            flex: 1;
+            margin-top: 24px;
+            overflow-y: auto;
+            padding-right: 6px;
+        }
+
+        .chat-history-title {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1.1px;
+            margin-bottom: 14px;
+            font-weight: 700;
+        }
+
+        .chat-item {
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            transition: transform 0.2s ease, background 0.2s ease;
+            border-left: 4px solid transparent;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chat-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-1px);
+            border-left-color: var(--accent);
+        }
+
+        .sidebar-footer {
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 20px;
+            margin-top: 24px;
+        }
+
+        .user-section {
+            margin-bottom: 18px;
+            padding: 18px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .auth-form h3 {
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            font-size: 1.1rem;
+            font-weight: 700;
+        }
+
+        .auth-input {
+            width: 100%;
+            padding: 12px 14px;
+            margin-bottom: 12px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 14px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .auth-input:focus {
+            outline: none;
+            border-color: rgba(102, 126, 234, 0.7);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 14px rgba(102, 126, 234, 0.12);
+        }
+
+        .auth-btn {
+            width: 100%;
+            padding: 13px 14px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 14px;
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 10px;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(102, 126, 234, 0.2);
+        }
+
+        .auth-link {
+            width: 100%;
+            padding: 11px 14px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            color: var(--accent-light);
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .auth-link:hover {
+            background: rgba(102, 126, 234, 0.08);
+            border-color: rgba(102, 126, 234, 0.2);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .user-avatar {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+        }
+
+        .user-name {
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .user-email {
+            font-size: 0.84rem;
+            color: var(--text-secondary);
+        }
+
+        .user-stats {
+            display: flex;
+            gap: 18px;
+            margin-bottom: 14px;
+        }
+
+        .logout-btn {
+            background: linear-gradient(135deg, #ff758c, #ff5370);
+        }
+
+        .logout-btn:hover {
+            box-shadow: 0 14px 28px rgba(255, 83, 112, 0.22);
+        }
+
+        .model-selector,
+        .settings-btn {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .model-selector {
+            margin-bottom: 14px;
+            appearance: none;
+        }
+
+        .settings-btn {
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .settings-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-1px);
+            color: var(--text-primary);
+        }
+
+        .chat-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: rgba(5, 10, 18, 0.95);
+            border-radius: 28px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            backdrop-filter: blur(20px);
+        }
+
+        .chat-header {
+            padding: 28px 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(12, 18, 34, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .chat-options {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            padding: 0 32px 18px;
+            color: var(--text-secondary);
+            flex-wrap: wrap;
+        }
+
+        .toggle-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.03);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .toggle-label:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .toggle-label input {
+            width: 16px;
+            height: 16px;
+        }
+
+        .switch-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 14px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.03);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .switch-label:hover {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .switch-label .switch {
+            position: relative;
+            display: inline-block;
+            width: 42px;
+            height: 24px;
+        }
+
+        .switch-label .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .switch-label .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255, 255, 255, 0.18);
+            border-radius: 34px;
+            transition: 0.2s;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+        }
+
+        .switch-label .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 2px;
+            background-color: white;
+            border-radius: 50%;
+            transition: 0.2s;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+        }
+
+        .switch-label input:checked + .slider {
+            background-color: #40c4ff;
+        }
+
+        .switch-label input:checked + .slider:before {
+            transform: translateX(18px);
+        }
+
+        .switch-label .switch-text {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .header-title {
+            font-size: 1.6rem;
+            font-weight: 800;
+            letter-spacing: -0.6px;
+        }
+
+        .model-badge {
+            background: rgba(102, 126, 234, 0.14);
+            padding: 7px 15px;
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--accent-light);
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .stats-display {
+            display: flex;
+            gap: 14px;
+            align-items: center;
+            padding: 10px 14px;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 16px;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 64px;
+        }
+
+        .stat-value {
+            font-weight: 800;
+            color: var(--accent-light);
+            font-size: 1.03rem;
+        }
+
+        .stat-label {
+            font-size: 0.76rem;
+            color: var(--text-secondary);
+        }
+
+        .icon-btn {
+            width: 46px;
+            height: 46px;
+            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-secondary);
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .icon-btn:hover {
+            background: var(--primary-gradient);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-1px);
+            box-shadow: 0 16px 36px rgba(102, 126, 234, 0.2);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 34px 36px;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+
+        .message-group {
+            display: flex;
+            gap: 14px;
+            animation: slideIn 0.28s ease;
+            align-items: flex-start;
+        }
+
+        .message.user {
+            align-self: flex-end;
+            justify-content: flex-end;
+        }
+
+        .message {
+            padding: 18px 20px;
+            border-radius: 22px;
+            max-width: 72%;
+            word-wrap: break-word;
+            line-height: 1.65;
+            font-size: 1rem;
+            min-width: 140px;
+            position: relative;
+        }
+
+        .message.user {
+            background: linear-gradient(135deg, #667eea 15%, #764ba2 100%);
+            color: white;
+            border-bottom-right-radius: 8px;
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.18);
+        }
+
+        .message.bot {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--text-primary);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom-left-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+
+        .message.error {
+            background: rgba(245, 87, 108, 0.14);
+            color: #ff9aaa;
+            border-color: rgba(245, 87, 108, 0.35);
+        }
+
+        .message-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
+        }
+
+        .message-avatar.user {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .message-avatar.bot {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .typing-indicator {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% {
+                opacity: 0.3;
+                transform: translateY(0);
+            }
+            30% {
+                opacity: 1;
+                transform: translateY(-8px);
+            }
+        }
+
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .empty-icon {
+            font-size: 4.2rem;
+            margin-bottom: 22px;
+            opacity: 0.34;
+        }
+
+        .empty-title {
+            font-size: 1.75rem;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .empty-description {
+            font-size: 1rem;
+            max-width: 380px;
+            line-height: 1.7;
+        }
+
+        .chat-input-container {
+            padding: 24px 32px;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(12, 18, 34, 0.95);
+            backdrop-filter: blur(18px);
+        }
+
+        .input-wrapper {
+            display: flex;
+            gap: 14px;
+            align-items: flex-end;
+        }
+
+        .input-field {
+            flex: 1;
+            padding: 16px 18px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid rgba(255, 255, 255, 0.12);
+            border-radius: 18px;
+            color: var(--text-primary);
+            font-size: 1rem;
+            resize: none;
+            max-height: 140px;
+            font-family: inherit;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: rgba(102, 126, 234, 0.75);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 20px rgba(102, 126, 234, 0.16);
+        }
+
+        .input-field::placeholder {
+            color: rgba(255, 255, 255, 0.55);
+        }
+
+        .send-btn {
+            width: 52px;
+            height: 52px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border: none;
+            border-radius: 18px;
+            color: white;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .send-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 18px 38px rgba(102, 126, 234, 0.28);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+        }
+
+        .attachment-btn {
+            width: 52px;
+            height: 52px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 18px;
+            color: var(--accent);
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.25s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .attachment-btn:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(102, 126, 234, 0.24);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 198px;
+            right: 46px;
+            width: 44px;
+            height: 44px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 24px 48px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+            animation: bounce 1.2s infinite;
+        }
+
+        .scroll-indicator.show {
+            display: flex;
+        }
+
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-8px);
+            }
+        }
+
+        @media (max-width: 980px) {
+            .chat-sidebar {
+                display: none;
+            }
+
+            .chat-header,
+            .chat-options,
+            .chat-messages,
+            .chat-input-container {
+                padding-left: 22px;
+                padding-right: 22px;
+            }
+
+            .chat-messages {
+                padding-top: 26px;
+            }
+        }
+
+        @media (max-width: 620px) {
+            body {
+                overflow: auto;
+            }
+
+            .chat-wrapper {
+                flex-direction: column;
+                gap: 0;
+                min-height: 100vh;
+            }
+
+            .chat-container {
+                border-radius: 0;
+                min-height: 100vh;
+                border-left: none;
+            }
+
+            .input-wrapper {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .send-btn,
+            .attachment-btn {
+                width: 100%;
+            }
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(102, 126, 234, 0.32);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(102, 126, 234, 0.6);
+        }
+
+        .toast-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(10, 16, 30, 0.96);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-left: 3px solid var(--accent);
+            padding: 18px 22px;
+            border-radius: 18px;
+            color: var(--text-primary);
+            font-size: 0.92rem;
+            box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+            animation: slideInRight 0.3s ease;
+            z-index: 1000;
+        }
+
+        .toast-notification.error {
+            border-left-color: #ff758c;
+        }
+
+        .toast-notification.success {
+            border-left-color: #4caf50;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .message-time {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 8px;
+            opacity: 0.8;
+        }
+
+        .chat-controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 12px;
+            flex-wrap: wrap;
+        }
+
+        .suggestion-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 8px 14px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            color: var(--accent);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .suggestion-btn:hover {
+            background: rgba(102, 126, 234, 0.14);
+            border-color: rgba(102, 126, 234, 0.26);
+        }
+
+        .loading-bar {
+            height: 3px;
+            background: linear-gradient(90deg, rgba(102, 126, 234, 0.15), rgba(102, 126, 234, 0.95), rgba(102, 126, 234, 0.15));
+            border-radius: 999px;
+            animation: loading 1.8s ease-in-out infinite;
+            width: 100%;
+        }
+
+        @keyframes loading {
+            0% {
+                width: 0%;
+            }
+            50% {
+                width: 72%;
+            }
+            100% {
+                width: 100%;
+            }
+        }
+
+        .message-wrapper {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* UI/UX 개선 추가 스타일 */
+        
+        /* 입력창 강조 */
+        .chat-input-container {
+            border-top: 2px solid var(--accent) !important;
+            position: relative;
+        }
+
+        .input-wrapper textarea {
+            border: 2px solid rgba(255, 255, 255, 0.12) !important;
+            transition: all 0.3s ease !important;
+        }
+
+        .input-wrapper textarea:focus {
+            border-color: var(--accent) !important;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1) !important;
+            background: rgba(102, 126, 234, 0.05) !important;
+        }
+
+        /* 전송 버튼 강조 */
+        .send-btn {
+            background: linear-gradient(135deg, var(--accent), var(--accent-light)) !important;
+            color: var(--dark-bg) !important;
+            font-weight: 700 !important;
+            box-shadow: 0 8px 24px rgba(102, 126, 234, 0.3) !important;
+            transform: scale(1);
+            transition: all 0.25s ease;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 12px 32px rgba(102, 126, 234, 0.4) !important;
+        }
+
+        /* 에러 메시지 영역 */
+        .error-message {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            color: #ff6b6b;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* 로딩 상태 스켈레톤 */
+        .skeleton-message {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            animation: shimmer 1.5s infinite;
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: -1000px 0;
+            }
+            100% {
+                background-position: 1000px 0;
+            }
+        }
+
+        /* 글자 수 카운터 */
+        .char-counter {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+            text-align: right;
+        }
+
+        .char-counter.warning {
+            color: var(--warning-color);
+        }
+
+        /* Tooltip 스타일 */
+        [data-tooltip] {
+            position: relative;
+            cursor: help;
+        }
+
+        [data-tooltip]:hover::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(10, 16, 30, 0.96);
+            color: var(--text-primary);
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            border: 1px solid var(--border-color);
+            z-index: 1000;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        [data-tooltip]:hover::before {
+            content: '';
+            position: absolute;
+            bottom: 120%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 5px solid transparent;
+            border-top-color: rgba(10, 16, 30, 0.96);
+            z-index: 1000;
+        }
+
+        /* 로고 강조 */
+        .logo {
+            font-size: 2.4rem !important;
+            font-weight: 950 !important;
+            letter-spacing: -1.2px !important;
+            text-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* 고급 옵션 토글 */
+        .advanced-toggle {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            color: var(--accent);
+            cursor: pointer;
+            font-size: 0.85rem;
+            text-align: center;
+            margin: 10px 0;
+            transition: all 0.25s ease;
+        }
+
+        .advanced-toggle:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+
+        .advanced-options {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .advanced-options.expanded {
+            max-height: 500px;
+        }
+
+        /* 테마 토글 버튼 */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 44px;
+            height: 44px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.25s ease;
+            z-index: 100;
+        }
+
+        .theme-toggle:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: var(--accent);
+        }
+
+        /* Design refresh: visual layer only */
+        :root {
+            --primary-gradient: linear-gradient(135deg, #1d4ed8 0%, #0f766e 100%);
+            --secondary-gradient: linear-gradient(135deg, #22d3ee 0%, #14b8a6 100%);
+            --dark-bg: #06121a;
+            --card-bg: rgba(10, 20, 28, 0.88);
+            --accent: #38bdf8;
+            --accent-light: #99f6e4;
+            --text-primary: #f5fbff;
+            --text-secondary: #8fb2c7;
+            --border-color: rgba(148, 163, 184, 0.18);
+            --shadow: 0 30px 80px rgba(2, 12, 18, 0.45);
+            --shadow-soft: 0 18px 48px rgba(2, 12, 18, 0.3);
+            --error-color: #fb7185;
+            --success-color: #34d399;
+            --warning-color: #fbbf24;
+        }
+
+        html,
+        body {
+            background:
+                radial-gradient(circle at 0% 0%, rgba(34, 211, 238, 0.16), transparent 28%),
+                radial-gradient(circle at 100% 10%, rgba(20, 184, 166, 0.15), transparent 24%),
+                radial-gradient(circle at 50% 100%, rgba(29, 78, 216, 0.18), transparent 32%),
+                linear-gradient(180deg, #041018 0%, #081720 52%, #0b1b24 100%);
+            font-family: "Pretendard Variable", "Pretendard", "Inter", "Segoe UI", sans-serif;
+        }
+
+        body::before {
+            background-image:
+                radial-gradient(circle at 15% 20%, rgba(56, 189, 248, 0.12), transparent 26%),
+                radial-gradient(circle at 88% 14%, rgba(20, 184, 166, 0.12), transparent 24%),
+                radial-gradient(circle at 55% 75%, rgba(29, 78, 216, 0.08), transparent 28%);
+        }
+
+        .chat-wrapper {
+            gap: 22px;
+            padding: 24px;
+        }
+
+        .chat-sidebar,
+        .chat-container {
+            position: relative;
+            border: 1px solid rgba(148, 163, 184, 0.12);
+            box-shadow: var(--shadow);
+        }
+
+        .chat-sidebar::before,
+        .chat-container::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 18%, transparent 82%, rgba(255, 255, 255, 0.03));
+            pointer-events: none;
+        }
+
+        .chat-sidebar {
+            background: linear-gradient(180deg, rgba(7, 19, 27, 0.96), rgba(10, 23, 32, 0.9));
+        }
+
+        .chat-container {
+            background:
+                radial-gradient(circle at top right, rgba(34, 211, 238, 0.08), transparent 24%),
+                linear-gradient(180deg, rgba(5, 15, 23, 0.98), rgba(8, 19, 28, 0.96));
+        }
+
+        .chat-header {
+            background: linear-gradient(180deg, rgba(8, 20, 30, 0.94), rgba(8, 20, 30, 0.82));
+            padding: 30px 34px 22px;
+        }
+
+        .chat-options {
+            padding: 0 34px 20px;
+            margin: 0 32px;
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .logo {
+            background: linear-gradient(135deg, #e0f2fe 0%, #67e8f9 45%, #2dd4bf 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: none;
+        }
+
+        .subtitle,
+        .chat-history-title,
+        .stat-label,
+        .switch-label .switch-text {
+            color: #7ea0b6;
+        }
+
+        .user-section,
+        .stats-display,
+        .chat-item,
+        .toggle-label,
+        .switch-label,
+        .model-selector,
+        .settings-btn,
+        #agent-selector {
+            background: rgba(255, 255, 255, 0.035) !important;
+            border: 1px solid rgba(148, 163, 184, 0.12) !important;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+        }
+
+        .chat-item {
+            border-left: none;
+            border-radius: 18px;
+            transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+        }
+
+        .chat-item:hover {
+            background: rgba(56, 189, 248, 0.08);
+            border-color: rgba(56, 189, 248, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .new-chat-btn,
+        .auth-btn,
+        .send-btn {
+            background: linear-gradient(135deg, #38bdf8 0%, #14b8a6 100%) !important;
+            color: #03212b !important;
+            box-shadow: 0 16px 40px rgba(20, 184, 166, 0.24) !important;
+        }
+
+        .new-chat-btn:hover,
+        .auth-btn:hover,
+        .send-btn:hover:not(:disabled) {
+            box-shadow: 0 20px 48px rgba(20, 184, 166, 0.3) !important;
+        }
+
+        .header-title {
+            font-size: 1.75rem;
+            letter-spacing: -0.9px;
+        }
+
+        .model-badge {
+            background: rgba(34, 211, 238, 0.1);
+            border: 1px solid rgba(34, 211, 238, 0.16);
+            color: #bdfcff;
+        }
+
+        .icon-btn,
+        .theme-toggle,
+        .attachment-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(148, 163, 184, 0.14);
+            color: #d8f7ff;
+        }
+
+        .icon-btn:hover,
+        .theme-toggle:hover,
+        .attachment-btn:hover {
+            background: rgba(56, 189, 248, 0.12);
+            border-color: rgba(56, 189, 248, 0.28);
+            color: #ffffff;
+            box-shadow: 0 12px 30px rgba(56, 189, 248, 0.14);
+        }
+
+        .chat-messages {
+            padding: 32px 34px;
+            gap: 20px;
+        }
+
+        .message {
+            max-width: 78%;
+            border-radius: 24px;
+            padding: 18px 20px;
+        }
+
+        .message.user {
+            background: linear-gradient(135deg, #0ea5e9 0%, #14b8a6 100%);
+            color: #03242c;
+            border-bottom-right-radius: 10px;
+        }
+
+        .message.bot {
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.04));
+            border: 1px solid rgba(148, 163, 184, 0.14);
+            border-bottom-left-radius: 10px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+        }
+
+        .message-avatar.bot {
+            background: linear-gradient(135deg, #0ea5e9 0%, #2dd4bf 100%);
+        }
+
+        .empty-state {
+            margin: auto;
+            min-height: 320px;
+            width: min(560px, 100%);
+            border: 1px dashed rgba(148, 163, 184, 0.16);
+            border-radius: 28px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015));
+        }
+
+        .empty-icon {
+            opacity: 0.55;
+        }
+
+        .chat-input-container {
+            background: linear-gradient(180deg, rgba(8, 20, 30, 0.82), rgba(8, 20, 30, 0.96)) !important;
+            border-top: 1px solid rgba(148, 163, 184, 0.12) !important;
+            padding: 22px 32px 24px;
+        }
+
+        .input-wrapper {
+            gap: 12px;
+            padding: 12px;
+            border-radius: 24px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(148, 163, 184, 0.12);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.03);
+        }
+
+        .input-field,
+        .input-wrapper textarea {
+            background: rgba(255, 255, 255, 0.025) !important;
+            border: 1px solid rgba(148, 163, 184, 0.08) !important;
+            border-radius: 18px;
+            box-shadow: none !important;
+        }
+
+        .input-field:focus,
+        .input-wrapper textarea:focus {
+            border-color: rgba(56, 189, 248, 0.45) !important;
+            background: rgba(255, 255, 255, 0.05) !important;
+            box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.08) !important;
+        }
+
+        .char-counter {
+            margin-top: 8px;
+            color: #79a6be;
+        }
+
+        .scroll-indicator {
+            background: linear-gradient(135deg, #38bdf8 0%, #14b8a6 100%);
+            color: #04232d;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(56, 189, 248, 0.26);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(56, 189, 248, 0.45);
+        }
+
+        @media (max-width: 980px) {
+            .chat-wrapper {
+                padding: 16px;
+            }
+
+            .chat-options {
+                margin: 0 20px;
+                padding-left: 0;
+                padding-right: 0;
+            }
+        }
+
+        @media (max-width: 620px) {
+            .chat-wrapper {
+                padding: 0;
+            }
+
+            .chat-header {
+                padding-top: 64px;
+            }
+
+            .chat-options {
+                margin: 0;
+                border-bottom: none;
+            }
+
+            .chat-messages,
+            .chat-input-container {
+                padding-left: 18px;
+                padding-right: 18px;
+            }
+
+            .message {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-wrapper">
+        <!-- Sidebar -->
+        <div class="chat-sidebar">
+            <div class="chat-sidebar-header">
+                <div class="logo">⚡ DELTA</div>
+                <div class="subtitle">AI Chatbot Studio</div>
+            </div>
+
+            <!-- User Management Section -->
+            <div class="user-section">
+                <div id="auth-section">
+                    <div class="auth-form" id="login-form">
+                        <h3>로그인</h3>
+                        <input type="text" id="login-username" placeholder="사용자명" class="auth-input">
+                        <input type="password" id="login-password" placeholder="비밀번호" class="auth-input">
+                        <button id="login-btn" class="auth-btn">로그인</button>
+                        <button id="show-register-btn" class="auth-link">계정 만들기</button>
+                    </div>
+                    
+                    <div class="auth-form" id="register-form" style="display: none;">
+                        <h3>계정 만들기</h3>
+                        <input type="text" id="register-username" placeholder="사용자명" class="auth-input">
+                        <input type="email" id="register-email" placeholder="이메일" class="auth-input">
+                        <input type="password" id="register-password" placeholder="비밀번호" class="auth-input">
+                        <button id="register-btn" class="auth-btn">계정 만들기</button>
+                        <button id="show-login-btn" class="auth-link">로그인으로 돌아가기</button>
+                    </div>
+                </div>
+                
+                <div id="user-profile" style="display: none;">
+                    <div class="user-info">
+                        <div class="user-avatar">👤</div>
+                        <div class="user-details">
+                            <div class="user-name" id="user-name"></div>
+                            <div class="user-email" id="user-email"></div>
+                        </div>
+                    </div>
+                    <div class="user-stats">
+                        <div class="stat-item">
+                            <span class="stat-value" id="user-chats">0</span>
+                            <span class="stat-label">채팅</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-value" id="user-tokens">0</span>
+                            <span class="stat-label">토큰</span>
+                        </div>
+                    </div>
+                    <button id="logout-btn" class="auth-btn logout-btn">로그아웃</button>
+                </div>
+            </div>
+
+            <button class="new-chat-btn">+ 새로운 채팅</button>
+
+            <div class="chat-history">
+                <div class="chat-history-title">채팅 기록</div>
+                <div id="chat-history-list"></div>
+            </div>
+
+            <div class="sidebar-footer">
+                <select class="model-selector" id="model-select">
+                    <option value="llama3">🦙 Llama 3</option>
+                    <option value="mistral">🌀 Mistral</option>
+                    <option value="neural-chat">🧠 Neural Chat</option>
+                    <optgroup label="DELTA NANO">
+                        <option value="delta-nano:latest">DELTA NANO latest</option>
+                        <option value="delta-nano:8b">DELTA NANO 8B</option>
+                        <option value="delta-nano:4b">DELTA NANO 4B</option>
+                    </optgroup>
+                </select>
+                <button class="settings-btn">⚙️ 설정</button>
+            </div>
+        </div>
+
+        <!-- Main Chat Area -->
+        <div class="chat-container">
+            <!-- Header -->
+            <div class="chat-header">
+                <div class="header-left">
+                    <div class="header-title">DELTA AI Assistant v2.0</div>
+                    <div class="model-badge">모델 로딩...</div>
+                </div>
+                <div class="stats-display">
+                    <div class="stat-item">
+                        <div class="stat-value" id="token-display">0</div>
+                        <div class="stat-label">토큰</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="request-counter">0</div>
+                        <div class="stat-label">요청</div>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="icon-btn" id="research-btn" title="리서치">🔎</div>
+                    <div class="icon-btn" id="code-btn" title="코딩">💻</div>
+                    <div class="icon-btn" id="info-btn" title="정보">ℹ️</div>
+                </div>
+            </div>
+            <div class="chat-options">
+                <!-- Basic toggles -->
+                <label class="switch-label"><span class="switch-text">자동 검색</span><span class="switch"><input type="checkbox" id="auto-search-toggle" checked><span class="slider"></span></span></label>
+                <label class="toggle-label"><input type="checkbox" id="fast-mode-toggle" checked>빠른 응답</label>
+                <label class="toggle-label" style="display: none;"><input type="checkbox" id="stream-toggle">실시간 스트리밍</label>
+                
+                <!-- Advanced reasoning toggles -->
+                <label class="toggle-label" title="구조화된 추론 활성화"><input type="checkbox" id="deltaThink-toggle">🧠 DELTAThink</label>
+                <label class="toggle-label" title="다각적 심층 분석"><input type="checkbox" id="deepThink-toggle">🔬 DeepThink</label>
+                <label class="toggle-label" title="고급 리서치 모드"><input type="checkbox" id="deepResearch-toggle">📚 DeepResearch</label>
+                <label class="toggle-label" title="수학 계산 활성화"><input type="checkbox" id="math-toggle">📐 수학</label>
+                <label class="toggle-label" title="고급 코딩 모드"><input type="checkbox" id="coding-toggle" checked>💻 코딩</label>
+                
+                <!-- Agent selector -->
+                <select id="agent-selector" style="padding: 8px; border-radius: 8px; background: rgba(255,255,255,0.05); color: var(--text-primary); border: 1px solid rgba(255,255,255,0.12); cursor: pointer;">
+                    <option value="chat">일반 채팅</option>
+                </select>
+            </div>
+
+            <!-- Messages -->
+            <div class="chat-messages" id="chat-messages">
+                <div class="empty-state">
+                    <div class="empty-icon">💬</div>
+                    <div class="empty-title">DELTA AI와 대화를 시작하세요</div>
+                    <div class="empty-description">다양한 주제에 대해 질문하고 도움을 받아보세요</div>
+                </div>
+            </div>
+
+            <div class="scroll-indicator" id="scroll-indicator">⬇️</div>
+
+            <!-- Input Area -->
+            <div class="chat-input-container">
+                <div id="error-message-area"></div>
+                <div class="input-wrapper">
+                    <button class="attachment-btn" title="파일 첨부 (지원: txt, pdf, md)">📎</button>
+                    <textarea 
+                        class="input-field" 
+                        id="chat-input" 
+                        placeholder="질문을 입력하세요... (Shift+Enter로 개행)"
+                        rows="1"
+                        maxlength="4000"
+                    ></textarea>
+                    <button class="send-btn" id="send-btn" title="전송 (Ctrl+Enter)">📤</button>
+                </div>
+                <div class="char-counter"><span id="char-count">0</span>/4000</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 테마 토글 버튼 -->
+    <button class="theme-toggle" id="theme-toggle" title="테마 전환 (라이트/다크 모드)">🌙</button>
+
+    <script>
+        class DeltaChatbot {
+            constructor() {
+                this.messagesContainer = document.getElementById('chat-messages');
+                this.inputField = document.getElementById('chat-input');
+                this.sendBtn = document.getElementById('send-btn');
+                this.modelSelect = document.getElementById('model-select');
+                this.modelBadge = document.querySelector('.model-badge');
+                this.tokenDisplay = document.getElementById('token-display');
+                this.requestCounter = document.getElementById('request-counter');
+                this.researchBtn = document.getElementById('research-btn');
+                this.deltaNanoModels = [
+                    'delta-nano:latest', 'delta-nano:8b', 'delta-nano:4b', 'delta-nano:3b', 'delta-nano:1.5b',
+                    'delta-nano:qwen', 'delta-nano:gemma', 'delta-nano:phi', 'delta-nano:mistral',
+                    'delta-nano:deepseek', 'delta-nano:llama', 'delta-nano:codellama', 'delta-nano:math'
+                ];
+                this.codeBtn = document.getElementById('code-btn');
+                this.infoBtn = document.getElementById('info-btn');
+                this.autoSearchToggle = document.getElementById('auto-search-toggle');
+                this.fastModeToggle = document.getElementById('fast-mode-toggle');
+                this.streamToggle = document.getElementById('stream-toggle');
+                this.scrollIndicator = document.getElementById('scroll-indicator');
+                this.currentModel = null;
+                this.conversationHistory = [];
+                this.isLoading = false;
+                this.maxRetries = 3;
+                this.retryDelay = 1000;
+                this.streamEnabled = false;
+                this.autoSearchEnabled = true;
+                this.fastModeEnabled = true;
+                this.totalTokens = 0;
+                this.totalRequests = 0;
+                
+                // Advanced reasoning toggles
+                this.deltaThinkToggle = document.getElementById('deltaThink-toggle');
+                this.deepThinkToggle = document.getElementById('deepThink-toggle');
+                this.deepResearchToggle = document.getElementById('deepResearch-toggle');
+                this.mathToggle = document.getElementById('math-toggle');
+                this.codingToggle = document.getElementById('coding-toggle');
+                this.agentSelector = document.getElementById('agent-selector');
+                
+                // Feature flags
+                this.deltaThinkEnabled = false;
+                this.deepThinkEnabled = false;
+                this.deepResearchEnabled = false;
+                this.mathEnabled = false;
+                this.codingEnabled = true;
+                this.currentAgent = 'chat';
+                
+                this.init();
+            }
+
+            init() {
+                this.sendBtn.addEventListener('click', () => this.sendMessage());
+                this.researchBtn.addEventListener('click', () => this.openResearchPrompt());
+                this.codeBtn.addEventListener('click', () => this.openCodePrompt());
+                if (this.infoBtn) {
+                    this.infoBtn.addEventListener('click', () => this.loadServerStats());
+                }
+                this.inputField.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' && !e.shiftKey) {
+                        e.preventDefault();
+                        this.sendMessage();
+                    }
+                });
+                this.inputField.addEventListener('input', () => this.autoResizeTextarea());
+                this.inputField.addEventListener('input', () => {
+                    const charCount = document.getElementById('char-count');
+                    charCount.textContent = this.inputField.value.length;
+                    if (this.inputField.value.length > 3500) {
+                        charCount.parentElement.classList.add('warning');
+                    } else {
+                        charCount.parentElement.classList.remove('warning');
+                    }
+                });
+                this.messagesContainer.addEventListener('scroll', () => this.handleScroll());
+                this.modelSelect.addEventListener('change', (e) => {
+                    this.currentModel = e.target.value;
+                    this.updateModelBadge();
+                });
+                this.autoSearchToggle.addEventListener('change', (e) => {
+                    this.autoSearchEnabled = e.target.checked;
+                });
+                this.fastModeToggle.addEventListener('change', (e) => {
+                    this.fastModeEnabled = e.target.checked;
+                });
+                // Streaming disabled - always use non-streaming mode
+                this.streamToggle.addEventListener('change', (e) => {
+                    this.streamEnabled = false; // Always disable streaming
+                });
+                
+                // Advanced feature toggles
+                this.deltaThinkToggle.addEventListener('change', (e) => {
+                    this.deltaThinkEnabled = e.target.checked;
+                    this.showNotification(e.target.checked ? '🧠 DELTAThink 활성화됨' : '🧠 DELTAThink 비활성화됨');
+                });
+                
+                this.deepThinkToggle.addEventListener('change', (e) => {
+                    this.deepThinkEnabled = e.target.checked;
+                    this.showNotification(e.target.checked ? '🔬 DeepThink 활성화됨' : '🔬 DeepThink 비활성화됨');
+                });
+                
+                this.deepResearchToggle.addEventListener('change', (e) => {
+                    this.deepResearchEnabled = e.target.checked;
+                    this.showNotification(e.target.checked ? '📚 DeepResearch 활성화됨' : '📚 DeepResearch 비활성화됨');
+                });
+                
+                this.mathToggle.addEventListener('change', (e) => {
+                    this.mathEnabled = e.target.checked;
+                    this.showNotification(e.target.checked ? '📐 수학 모드 활성화됨' : '📐 수학 모드 비활성화됨');
+                });
+                
+                this.codingToggle.addEventListener('change', (e) => {
+                    this.codingEnabled = e.target.checked;
+                    this.showNotification(e.target.checked ? '💻 코딩 모드 활성화됨' : '💻 코딩 모드 비활성화됨');
+                });
+                
+                this.agentSelector.addEventListener('change', (e) => {
+                    this.currentAgent = e.target.value;
+                    const agentNames = {
+                        'chat': '일반 채팅',
+                        'delta': 'DELTA Agent',
+                        'pro': 'DELTAPRO Agent',
+                        'reasoning': 'DELTA Reasoning'
+                    };
+                    this.showNotification(`📌 ${agentNames[this.currentAgent]} 선택됨`);
+                });
+                
+                this.loadAvailableModels();
+                
+                // 테마 토글
+                const themeToggle = document.getElementById('theme-toggle');
+                if (themeToggle) {
+                    themeToggle.addEventListener('click', () => this.toggleTheme());
+                }
+            }
+
+            autoResizeTextarea() {
+                this.inputField.style.height = 'auto';
+                this.inputField.style.height = Math.min(this.inputField.scrollHeight, 120) + 'px';
+            }
+
+            async loadAvailableModels() {
+                try {
+                    const response = await fetch('/api/models');
+                    const data = await response.json();
+                    const models = Array.isArray(data.models) ? data.models : [];
+                    const defaultModel = data.defaultModel || (models.length ? models[0] : null);
+
+                    if (!models.length) {
+                        this.modelSelect.innerHTML = '<option value="llama3:latest">llama3:latest</option>';
+                        this.currentModel = 'llama3:latest';
+                    } else {
+                        this.populateModelSelector(models, defaultModel);
+                    }
+                    this.addDeltaNanoOptions();
+
+                    this.fastModeToggle.checked = this.fastModeEnabled;
+                    this.autoSearchToggle.checked = this.autoSearchEnabled;
+                    this.updateModelBadge();
+                } catch (error) {
+                    this.addMessage(`모델 정보를 불러오는 중 오류가 발생했습니다: ${error.message}`, 'error');
+                    this.modelSelect.innerHTML = '<option value="llama3:latest">llama3:latest</option>';
+                    this.currentModel = 'llama3:latest';
+                    this.addDeltaNanoOptions();
+                    this.fastModeToggle.checked = this.fastModeEnabled;
+                    this.autoSearchToggle.checked = this.autoSearchEnabled;
+                    this.updateModelBadge();
+                }
+            }
+
+            populateModelSelector(models, defaultModel) {
+                this.modelSelect.innerHTML = '';
+                models.forEach((model) => {
+                    const option = document.createElement('option');
+                    option.value = model;
+                    option.textContent = model;
+                    if (model === defaultModel) {
+                        option.selected = true;
+                        this.currentModel = model;
+                    }
+                    this.modelSelect.appendChild(option);
+                });
+                if (!this.currentModel && models.length) {
+                    this.currentModel = models[0];
+                }
+            }
+
+            addDeltaNanoOptions() {
+                if (!this.modelSelect) return;
+                const existingValues = new Set(Array.from(this.modelSelect.options).map((option) => option.value));
+                const deltaGroup = document.createElement('optgroup');
+                deltaGroup.label = 'DELTA NANO';
+
+                this.deltaNanoModels.forEach((model) => {
+                    if (existingValues.has(model)) {
+                        return;
+                    }
+                    const option = document.createElement('option');
+                    option.value = model;
+                    option.textContent = model.replace('delta-nano:', 'DELTA NANO ');
+                    deltaGroup.appendChild(option);
+                });
+
+                if (deltaGroup.children.length > 0) {
+                    this.modelSelect.appendChild(deltaGroup);
+                }
+            }
+
+            updateModelBadge() {
+                if (this.modelBadge) {
+                    this.modelBadge.textContent = this.currentModel ? this.currentModel : '모델 없음';
+                }
+            }
+
+            async openResearchPrompt() {
+                const query = prompt('리서치할 내용을 입력하세요. 예: 최신 물리 엔진 구현 방법');
+                if (!query) return;
+                this.addMessage(query, 'user');
+                await this.performResearch(query);
+            }
+
+            async openCodePrompt() {
+                const promptText = prompt('코딩할 작업을 입력하세요. 예: 간단한 물리 엔진과 UI 통합');
+                if (!promptText) return;
+                this.addMessage(promptText, 'user');
+                await this.generateCode(promptText);
+            }
+
+            async performResearch(query) {
+                this.addMessage('리서치 중입니다... 잠시만 기다려주세요.', 'bot');
+                try {
+                    const response = await fetch('/api/search', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({ query })
+                    });
+                    const data = await response.json();
+                    if (data.error) {
+                        this.addMessage(`리서치 오류: ${data.error}`, 'error');
+                        return;
+                    }
+                    const summary = data.abstract || '검색 결과가 없습니다. 자세히 검색해 주세요.';
+                    const links = data.results.map(item => `${item.text} (${item.url})`).join('\n');
+                    this.addMessage(`리서치 결과:\n${summary}\n\n관련 링크:\n${links}`, 'bot');
+                } catch (error) {
+                    this.addMessage(`리서치 요청 실패: ${error.message}`, 'error');
+                }
+            }
+
+            async generateCode(promptText) {
+                this.addMessage('코드 생성을 시작합니다. 약간의 시간이 소요될 수 있습니다.', 'bot');
+                try {
+                    const response = await fetch('/api/code', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({ prompt: promptText, language: 'python', model: this.currentModel })
+                    });
+                    const data = await response.json();
+                    if (data.error) {
+                        this.addMessage(`코딩 오류: ${data.error}`, 'error');
+                        return;
+                    }
+                    this.addMessage(`코드 생성 완료 (모델: ${data.model})\n\n${data.code}`, 'bot');
+                } catch (error) {
+                    this.addMessage(`코드 생성 실패: ${error.message}`, 'error');
+                }
+            }
+
+            handleScroll() {
+                const { scrollHeight, scrollTop, clientHeight } = this.messagesContainer;
+                const isNearBottom = scrollHeight - scrollTop - clientHeight < 100;
+                this.scrollIndicator.classList.toggle('show', !isNearBottom);
+            }
+
+            showScroll() {
+                this.scrollIndicator.classList.add('show');
+            }
+
+            scrollToBottom() {
+                this.messagesContainer.scrollTop = this.messagesContainer.scrollHeight;
+                this.scrollIndicator.classList.remove('show');
+            }
+
+            addMessage(content, type = 'bot', time = null) {
+                if (this.messagesContainer.querySelector('.empty-state')) {
+                    this.messagesContainer.innerHTML = '';
+                }
+
+                const messageGroup = document.createElement('div');
+                messageGroup.className = 'message-group';
+
+                const avatar = document.createElement('div');
+                avatar.className = `message-avatar ${type}`;
+                avatar.innerHTML = type === 'user' ? '👤' : '🤖';
+
+                const messageWrapper = document.createElement('div');
+                messageWrapper.className = 'message-wrapper';
+                
+                const message = document.createElement('div');
+                message.className = `message ${type}`;
+                message.innerHTML = this.escapeHtml(content).replace(/\n/g, '<br>');
+
+                const messageTime = document.createElement('div');
+                messageTime.className = 'message-time';
+                messageTime.textContent = time || this.getCurrentTime();
+
+                messageWrapper.appendChild(message);
+                messageWrapper.appendChild(messageTime);
+
+                if (type === 'user') {
+                    messageGroup.appendChild(messageWrapper);
+                    messageGroup.appendChild(avatar);
+                } else {
+                    messageGroup.appendChild(avatar);
+                    messageGroup.appendChild(messageWrapper);
+                }
+
+                this.messagesContainer.appendChild(messageGroup);
+                this.scrollToBottom();
+                return messageGroup;
+            }
+
+            showTyping() {
+                const messageGroup = document.createElement('div');
+                messageGroup.className = 'message-group';
+
+                const avatar = document.createElement('div');
+                avatar.className = 'message-avatar bot';
+                avatar.innerHTML = '🤖';
+
+                const message = document.createElement('div');
+                message.className = 'message bot';
+                message.innerHTML = '<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+
+                const messageWrapper = document.createElement('div');
+                messageWrapper.className = 'message-wrapper';
+                messageWrapper.appendChild(message);
+
+                messageGroup.appendChild(avatar);
+                messageGroup.appendChild(messageWrapper);
+                this.messagesContainer.appendChild(messageGroup);
+                this.scrollToBottom();
+                return messageGroup;
+            }
+
+            async sendMessageWithRetry(message, retryCount = 0) {
+                try {
+                    const url = this.currentAgent === 'chat' ? '/api/chat' : '/api/reasoning/execute';
+                    const requestBody = this.currentAgent === 'chat' 
+                        ? {
+                            message: message,
+                            model: this.currentModel,
+                            useSearch: this.autoSearchEnabled,
+                            fastMode: this.fastModeEnabled,
+                            mathMode: this.mathEnabled
+                        }
+                        : {
+                            task: message,
+                            agent_type: this.currentAgent,
+                            optimizations: true,
+                            useSearch: this.autoSearchEnabled
+                        };
+
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(requestBody)
+                    });
+
+                    if (!response.ok) {
+                        if (response.status === 500 && retryCount < this.maxRetries) {
+                            await new Promise(resolve => setTimeout(resolve, this.retryDelay * (retryCount + 1)));
+                            return this.sendMessageWithRetry(message, retryCount + 1);
+                        }
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    const data = await response.json();
+                    
+                    let responseContent = '';
+                    let tokensUsed = 0;
+                    
+                    if (this.currentAgent === 'chat') {
+                        responseContent = data.reply || `오류: ${data.error}`;
+                        tokensUsed = data.tokensUsed || 0;
+                    } else {
+                        // Reasoning agent response
+                        if (data.analysis || data.reasoning || data.code_generation) {
+                            responseContent = `
+[DELTA ${this.currentAgent.toUpperCase()}]
+${data.analysis ? '분석: ' + JSON.stringify(data.analysis, null, 2) + '\n' : ''}
+${data.reasoning ? '추론: ' + JSON.stringify(data.reasoning, null, 2) + '\n' : ''}
+${data.research ? '리서치: ' + JSON.stringify(data.research, null, 2) + '\n' : ''}
+${data.code_generation ? '코드: ' + JSON.stringify(data.code_generation, null, 2) + '\n' : ''}
+                            `.trim();
+                        } else {
+                            responseContent = '응답을 처리할 수 없습니다.';
+                        }
+                    }
+                    
+                    if (responseContent) {
+                        this.updateTokenDisplay(tokensUsed);
+                        this.incrementRequestCounter();
+                        return { type: 'success', content: responseContent, tokens: tokensUsed };
+                    } else if (data.error) {
+                        return { type: 'error', content: `오류: ${data.error}` };
+                    }
+                } catch (fetchError) {
+                    if (retryCount < this.maxRetries) {
+                        await new Promise(resolve => setTimeout(resolve, this.retryDelay * (retryCount + 1)));
+                        return this.sendMessageWithRetry(message, retryCount + 1);
+                    }
+                    return { type: 'error', content: `연결 오류: ${fetchError.message}` };
+                }
+            }
+
+            updateTokenDisplay(tokens = 0) {
+                this.totalTokens += tokens;
+                if (this.tokenDisplay) {
+                    this.tokenDisplay.textContent = this.totalTokens.toLocaleString();
+                }
+            }
+
+            incrementRequestCounter() {
+                this.totalRequests += 1;
+                if (this.requestCounter) {
+                    this.requestCounter.textContent = this.totalRequests;
+                }
+            }
+
+            async loadServerStats() {
+                try {
+                    const response = await fetch('/api/config');
+                    const data = await response.json();
+                    if (data.stats) {
+                        const stats = data.stats;
+                        this.showNotification(`요청: ${stats.total_requests}  에러율: ${Math.round(stats.error_rate * 100)}%  토큰 사용자: ${stats.active_users}`);
+                    } else {
+                        this.showNotification('서버 통계를 불러오지 못했습니다.', 'error');
+                    }
+                } catch (error) {
+                    this.showNotification(`서버 상태 가져오기 실패: ${error.message}`, 'error');
+                }
+            }
+
+            async sendMessage() {
+                const message = this.inputField.value.trim();
+                if (!message || this.isLoading) return;
+
+                this.isLoading = true;
+                this.sendBtn.disabled = true;
+
+                try {
+                    const urlMatch = message.match(/https?:\/\/[\S]+|www\.[\S]+/i);
+                    this.addMessage(message, 'user');
+                    this.inputField.value = '';
+                    this.inputField.style.height = 'auto';
+                    this.conversationHistory.push({ role: 'user', content: message });
+
+                    if (urlMatch) {
+                        const typingElement = this.showTyping();
+                        const result = await this.fetchUrlSummary(urlMatch[0]);
+                        typingElement.remove();
+                        if (result.success) {
+                            this.addMessage(result.summary, 'bot');
+                            this.conversationHistory.push({ role: 'bot', content: result.summary });
+                        } else {
+                            this.addMessage(result.error || 'URL 요약에 실패했습니다.', 'error');
+                        }
+                    } else if (this.streamEnabled) {
+                        await this.sendMessageStream(message);
+                    } else {
+                        const typingElement = this.showTyping();
+                        const result = await this.sendMessageWithRetry(message);
+                        typingElement.remove();
+
+                        if (result.type === 'success') {
+                            this.addMessage(result.content, 'bot');
+                            this.conversationHistory.push({ role: 'bot', content: result.content });
+                        } else {
+                            this.addMessage(result.content, 'error');
+                        }
+                    }
+                } catch (error) {
+                    this.addMessage(`오류가 발생했습니다: ${error.message}`, 'error');
+                } finally {
+                    this.isLoading = false;
+                    this.sendBtn.disabled = false;
+                    this.inputField.focus();
+                }
+            }
+
+            async fetchUrlSummary(url) {
+                try {
+                    const response = await fetch('/api/summarize-url', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ url, summary_length: 'medium' })
+                    });
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => ({}));
+                        return { success: false, error: errorData.error || 'URL 요약 요청 중 오류가 발생했습니다.' };
+                    }
+                    const data = await response.json();
+                    return { success: data.success, summary: data.summary, error: data.error };
+                } catch (error) {
+                    return { success: false, error: error.message };
+                }
+            }
+
+            async sendMessageStream(message) {
+                const botGroup = this.addMessage('', 'bot');
+                const botMessageEl = botGroup.querySelector('.message');
+                botMessageEl.innerHTML = '<div class="typing-indicator"><div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div></div>';
+
+                try {
+                    const response = await fetch('/api/stream-chat', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Accept-Charset': 'utf-8' },
+                        body: JSON.stringify({
+                            message,
+                            model: this.currentModel,
+                            useSearch: this.autoSearchEnabled,
+                            fastMode: this.fastModeEnabled
+                        })
+                    });
+
+                    if (!response.ok) {
+                        const errorData = await response.json().catch(() => ({}));
+                        throw new Error(errorData.error || `HTTP ${response.status}`);
+                    }
+
+                    const reader = response.body.getReader();
+                    const decoder = new TextDecoder('utf-8');
+                    let buffer = '';
+
+                    botMessageEl.innerHTML = '';
+                    let isDone = false;
+
+                    while (!isDone) {
+                        const { value, done } = await reader.read();
+                        if (done) break;
+                        buffer += decoder.decode(value, { stream: true });
+                        const chunks = buffer.split('\n\n');
+                        buffer = chunks.pop();
+
+                        for (const chunk of chunks) {
+                            if (!chunk.trim()) continue;
+                            const lines = chunk.split('\n');
+                            let eventType = 'message';
+                            let dataPayload = '';
+                            for (const line of lines) {
+                                if (line.startsWith('event:')) {
+                                    eventType = line.slice(6).trim();
+                                }
+                                if (line.startsWith('data:')) {
+                                    dataPayload += line.slice(5).trim();
+                                }
+                            }
+                            if (!dataPayload) continue;
+                            const payload = JSON.parse(dataPayload);
+                            if (payload.delta) {
+                                const utf8Bytes = new TextEncoder().encode(payload.delta);
+                                payload.delta = new TextDecoder('utf-8').decode(utf8Bytes);
+                            }
+                            if (eventType === 'metadata' && payload.model) {
+                                this.currentModel = payload.model;
+                                this.updateModelBadge();
+                            }
+                            if (eventType === 'message' && payload.delta) {
+                                botMessageEl.innerHTML += this.escapeHtml(payload.delta).replace(/\n/g, '<br>');
+                                this.scrollToBottom();
+                            }
+                            if (eventType === 'error') {
+                                throw new Error(payload.message || '스트리밍 오류 발생');
+                            }
+                            if (eventType === 'done') {
+                                this.incrementRequestCounter();
+                                if (payload.tokensUsed) {
+                                    this.updateTokenDisplay(payload.tokensUsed);
+                                }
+                                if (payload.status === 'finished') {
+                                    botMessageEl.insertAdjacentHTML('beforeend', '<div class="message-time">완료</div>');
+                                }
+                                isDone = true;
+                            }
+                        }
+                    }
+
+                    if (buffer.trim()) {
+                        const lines = buffer.split('\n');
+                        let dataPayload = '';
+                        for (const line of lines) {
+                            if (line.startsWith('data:')) {
+                                dataPayload += line.slice(5).trim();
+                            }
+                        }
+                        if (dataPayload) {
+                            const payload = JSON.parse(dataPayload);
+                            if (payload.delta) {
+                                botMessageEl.innerHTML += this.escapeHtml(payload.delta).replace(/\n/g, '<br>');
+                            }
+                        }
+                    }
+                } catch (error) {
+                    this.addMessage(`스트리밍 오류: ${error.message}`, 'error');
+                }
+            }
+
+            escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            getCurrentTime() {
+                const now = new Date();
+                return now.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' });
+            }
+
+            showNotification(message, type = 'success') {
+                const toast = document.createElement('div');
+                toast.className = `toast-notification ${type}`;
+                toast.textContent = message;
+                document.body.appendChild(toast);
+
+                setTimeout(() => {
+                    toast.remove();
+                }, 3000);
+            }
+
+            showErrorMessage(message) {
+                const errorArea = document.getElementById('error-message-area');
+                if (errorArea) {
+                    errorArea.innerHTML = `<div class="error-message">❌ ${message}</div>`;
+                    setTimeout(() => {
+                        errorArea.innerHTML = '';
+                    }, 5000);
+                }
+            }
+
+            toggleTheme() {
+                const root = document.documentElement;
+                const currentBg = getComputedStyle(root).getPropertyValue('--dark-bg');
+                const isDark = currentBg.includes('05080f') || currentBg.includes('white') === false;
+                
+                if (isDark) {
+                    // Light mode
+                    root.style.setProperty('--dark-bg', '#f5f7fa');
+                    root.style.setProperty('--card-bg', 'rgba(255, 255, 255, 0.95)');
+                    root.style.setProperty('--text-primary', '#1a1a1a');
+                    root.style.setProperty('--text-secondary', '#666666');
+                    root.style.setProperty('--border-color', 'rgba(0, 0, 0, 0.1)');
+                    document.getElementById('theme-toggle').textContent = '☀️';
+                    localStorage.setItem('theme', 'light');
+                } else {
+                    // Dark mode
+                    root.style.setProperty('--dark-bg', '#05080f');
+                    root.style.setProperty('--card-bg', 'rgba(18, 24, 40, 0.92)');
+                    root.style.setProperty('--text-primary', '#ffffff');
+                    root.style.setProperty('--text-secondary', '#b0c4ff');
+                    root.style.setProperty('--border-color', 'rgba(255, 255, 255, 0.18)');
+                    document.getElementById('theme-toggle').textContent = '🌙';
+                    localStorage.setItem('theme', 'dark');
+                }
+            }
+
+            // User Management Methods
+            async initUserManagement() {
+                this.sessionId = localStorage.getItem('sessionId');
+                if (this.sessionId) {
+                    await this.validateSession();
+                }
+
+                // Setup event listeners
+                this.setupUserEventListeners();
+            }
+
+            setupUserEventListeners() {
+                // Login form
+                const loginBtn = document.getElementById('login-btn');
+                const showRegisterBtn = document.getElementById('show-register-btn');
+                const showLoginBtn = document.getElementById('show-login-btn');
+                const registerBtn = document.getElementById('register-btn');
+                const logoutBtn = document.getElementById('logout-btn');
+
+                loginBtn.addEventListener('click', () => this.handleLogin());
+                showRegisterBtn.addEventListener('click', () => this.showRegisterForm());
+                showLoginBtn.addEventListener('click', () => this.showLoginForm());
+                registerBtn.addEventListener('click', () => this.handleRegister());
+                logoutBtn.addEventListener('click', () => this.handleLogout());
+            }
+
+            async handleLogin() {
+                const username = document.getElementById('login-username').value.trim();
+                const password = document.getElementById('login-password').value;
+
+                if (!username || !password) {
+                    this.showNotification('사용자명과 비밀번호를 입력하세요.', 'error');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/api/login', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username, password })
+                    });
+
+                    const data = await response.json();
+                    if (data.success) {
+                        this.sessionId = data.session_id;
+                        localStorage.setItem('sessionId', this.sessionId);
+                        this.showNotification(data.message);
+                        await this.loadUserProfile();
+                        await this.loadChatHistory();
+                    } else {
+                        this.showNotification(data.message, 'error');
+                    }
+                } catch (error) {
+                    this.showNotification('로그인 실패: ' + error.message, 'error');
+                }
+            }
+
+            async handleRegister() {
+                const username = document.getElementById('register-username').value.trim();
+                const email = document.getElementById('register-email').value.trim();
+                const password = document.getElementById('register-password').value;
+
+                if (!username || !email || !password) {
+                    this.showNotification('모든 필드를 입력하세요.', 'error');
+                    return;
+                }
+
+                try {
+                    const response = await fetch('/api/register', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ username, email, password })
+                    });
+
+                    const data = await response.json();
+                    if (data.success) {
+                        this.showNotification(data.message);
+                        this.showLoginForm();
+                    } else {
+                        this.showNotification(data.message, 'error');
+                    }
+                } catch (error) {
+                    this.showNotification('등록 실패: ' + error.message, 'error');
+                }
+            }
+
+            handleLogout() {
+                localStorage.removeItem('sessionId');
+                this.sessionId = null;
+                document.getElementById('auth-section').style.display = 'block';
+                document.getElementById('user-profile').style.display = 'none';
+                document.getElementById('chat-history-list').innerHTML = '';
+                this.showNotification('로그아웃되었습니다.');
+            }
+
+            showRegisterForm() {
+                document.getElementById('login-form').style.display = 'none';
+                document.getElementById('register-form').style.display = 'block';
+            }
+
+            showLoginForm() {
+                document.getElementById('register-form').style.display = 'none';
+                document.getElementById('login-form').style.display = 'block';
+            }
+
+            async validateSession() {
+                if (!this.sessionId) return false;
+
+                try {
+                    const response = await fetch('/api/profile', {
+                        headers: { 'Authorization': `Bearer ${this.sessionId}` }
+                    });
+
+                    if (response.ok) {
+                        const data = await response.json();
+                        await this.loadUserProfile();
+                        await this.loadChatHistory();
+                        return true;
+                    } else {
+                        localStorage.removeItem('sessionId');
+                        this.sessionId = null;
+                        return false;
+                    }
+                } catch (error) {
+                    console.error('Session validation error:', error);
+                    return false;
+                }
+            }
+
+            async loadUserProfile() {
+                try {
+                    const response = await fetch('/api/profile', {
+                        headers: { 'Authorization': `Bearer ${this.sessionId}` }
+                    });
+
+                    const data = await response.json();
+                    if (data.success) {
+                        const profile = data.profile;
+                        document.getElementById('user-name').textContent = profile.username;
+                        document.getElementById('user-email').textContent = profile.email;
+                        document.getElementById('user-chats').textContent = profile.total_chats;
+                        document.getElementById('user-tokens').textContent = profile.total_tokens.toLocaleString();
+
+                        document.getElementById('auth-section').style.display = 'none';
+                        document.getElementById('user-profile').style.display = 'block';
+                    }
+                } catch (error) {
+                    console.error('Profile load error:', error);
+                }
+            }
+
+            async loadChatHistory() {
+                try {
+                    const response = await fetch('/api/chat-history', {
+                        headers: { 'Authorization': `Bearer ${this.sessionId}` }
+                    });
+
+                    const data = await response.json();
+                    if (data.success) {
+                        const historyList = document.getElementById('chat-history-list');
+                        historyList.innerHTML = '';
+
+                        data.history.forEach(item => {
+                            const historyItem = document.createElement('div');
+                            historyItem.className = 'chat-item';
+                            historyItem.innerHTML = `
+                                <div class="history-message">${item.message.substring(0, 50)}...</div>
+                                <div class="history-time">${new Date(item.created_at).toLocaleDateString()}</div>
+                            `;
+                            historyItem.addEventListener('click', () => this.loadChatItem(item));
+                            historyList.appendChild(historyItem);
+                        });
+                    }
+                } catch (error) {
+                    console.error('Chat history load error:', error);
+                }
+            }
+
+            loadChatItem(chatItem) {
+                // Clear current messages
+                this.messagesContainer.innerHTML = '';
+                
+                // Add the historical messages
+                this.addMessage(chatItem.message, 'user', new Date(chatItem.created_at).toLocaleString());
+                this.addMessage(chatItem.response, 'bot', new Date(chatItem.created_at).toLocaleString());
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatbot = new DeltaChatbot();
+            chatbot.initUserManagement();
+        });
+    </script>
+</body>
+</html></content>
+<parameter name="filePath">c:\Users\gamju\Desktop\DELTA-CRUSH-EXPANDED\DELTA chatbot.html
