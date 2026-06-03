@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DLTZX HUB | OMNI-MODEL KERNEL v31.0</title>
+    
+    <!-- External Frameworks & Cyber Assets -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@200;300;400;500;600;700;800&family=JetBrains+Mono:wght@100;200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* 
+         * =========================================================================
+         * DLTZX HUB SUPREME KERNEL v31.0 - SYSTEM STYLESHEET
+         * DESIGN: QUANTUM GLASSMORPHISM (ULTRA-DENSE)
+         * SCALING: MONITOR-ADAPTIVE ISOLATED SCROLL
+         * =========================================================================
+         */
+
+        :root {
+            --p: #ff0044;
+            --p-glow: rgba(255, 0, 68, 0.5);
+            --p-rgb: 255, 0, 68;
+            --s: #bc13fe;
+            --s-glow: rgba(188, 19, 254, 0.5);
+            --s-rgb: 188, 19, 254;
+            --a: #00ff88;
+            --ai: #00d4ff;
+            --ai-glow: rgba(0, 212, 255, 0.6);
+            --bg-deep: #010101;
+            --bg-surface: #060606;
+            --bg-glass: rgba(4, 4, 4, 0.98);
+            --border: rgba(255, 0, 68, 0.22);
+            --tx-m: #f1f5f9;
+            --tx-d: #94a3b8;
+            --tr-slow: 0.75s cubic-bezier(0.19, 1, 0.22, 1);
+            --radius-xl: 60px;
+            --radius-lg: 35px;
+            --sb-w: 340px;
+            --tm-w: 400px;
+        }
+
+        /* --- Global Reset & Isolated Scroll --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(var(--p), var(--s)); border-radius: 20px; }
+
+        html, body { 
+            width: 100%; height: 100vh;
+            background: var(--bg-deep); color: var(--tx-m);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow: hidden; 
+        }
+
+        /* --- Dynamic VFX Background --- */
+        .vfx-core { position: fixed; inset: 0; z-index: -10; pointer-events: none; overflow: hidden; }
+        .vfx-blob {
+            position: absolute; inset: 0;
+            background: radial-gradient(circle at 10% 10%, rgba(var(--p-rgb), 0.15) 0%, transparent 45%),
+                        radial-gradient(circle at 90% 90%, rgba(var(--s-rgb), 0.15) 0%, transparent 45%),
+                        radial-gradient(circle at 50% 50%, rgba(0, 255, 136, 0.03) 0%, transparent 60%);
+            filter: blur(100px); opacity: 0.8;
+        }
+        .vfx-grid {
+            position: absolute; inset: 0;
+            background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 80px 80px; opacity: 0.12; animation: gridDrift 60s linear infinite;
+        }
+        @keyframes gridDrift { from { background-position: 0 0; } to { background-position: 160px 160px; } }
+
+        /* --- Auth Portal --- */
+        #auth-portal {
+            position: fixed; inset: 0; z-index: 10000000;
+            background: #000; display: flex; align-items: center; justify-content: center;
+            transition: opacity 1.2s var(--tr-slow), visibility 1.2s;
+        }
+        .auth-canvas {
+            width: 580px; padding: 70px; border-radius: 65px; background: var(--bg-glass);
+            border: 1px solid var(--border); box-shadow: 0 0 200px rgba(var(--p-rgb), 0.15);
+            backdrop-filter: blur(150px); text-align: center;
+        }
+        .auth-hero-logo { font-family: 'Orbitron', sans-serif; font-size: 42px; font-weight: 950; letter-spacing: 12px; background: linear-gradient(to right, #fff, var(--p), var(--s)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 50px; filter: drop-shadow(0 0 15px var(--p-glow)); }
+        
+        .auth-slide-switch { width: 300px; height: 58px; background: rgba(255,255,255,0.04); border: 1px solid var(--border); border-radius: 35px; margin: 0 auto 45px; position: relative; display: flex; align-items: center; cursor: pointer; padding: 5px; }
+        .auth-slide-cursor { position: absolute; left: 5px; width: calc(50% - 5px); height: calc(100% - 10px); background: var(--p); border-radius: 30px; transition: 0.5s cubic-bezier(0.68, -0.6, 0.32, 1.6); box-shadow: var(--glow-p); z-index: 1; }
+        .auth-slide-label { flex: 1; font-family: 'Orbitron'; font-size: 11px; font-weight: 900; letter-spacing: 2px; color: var(--tx-d); z-index: 2; transition: 0.3s; }
+        .auth-slide-label.active { color: #000; }
+        #auth-portal.signup-mode .auth-slide-cursor { left: 50%; }
+        
+        .auth-input-cyber { width: 100%; background: #080808; border: 1.5px solid var(--border); padding: 22px 25px 22px 85px; border-radius: 35px; color: #fff; font-family: 'JetBrains Mono'; font-size: 18px; margin-bottom: 25px; transition: 0.4s; }
+        .auth-input-cyber:focus { border-color: var(--p); box-shadow: var(--glow-p); transform: translateY(-4px); }
+        .btn-gate-ignite { width: 100%; padding: 25px; border-radius: 35px; border: none; background: linear-gradient(45deg, var(--p), var(--s)); color: #000; font-family: 'Orbitron'; font-weight: 950; font-size: 18px; cursor: pointer; transition: 0.4s; margin-top: 20px; }
+
+        /* --- Main Framework Layout --- */
+        #main-app { display: block; opacity: 1; transition: opacity 1.5s var(--tr-slow); }
+        .master-layout { width: 100%; height: 100vh; padding: 20px; display: grid; grid-template-columns: var(--sidebar-w) 1fr var(--tele-w); gap: 20px; overflow: hidden; }
+
+        .glass-panel { background: var(--bg-glass); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 40px; backdrop-filter: blur(100px); box-shadow: var(--sh-xl); position: relative; overflow: hidden; display: flex; flex-direction: column; }
+
+        /* Sidebar Identity */
+        .identity-core { text-align: center; border-bottom: 1px solid var(--border); padding-bottom: 40px; margin-bottom: 25px; flex-shrink: 0; }
+        .mascot-reactor { width: 150px; height: 150px; border-radius: 60px; margin: 0 auto 30px; border: 5px solid var(--p); box-shadow: var(--glow-p); overflow: hidden; background: #000; display: flex; align-items: center; justify-content: center; position: relative; }
+        .mascot-reactor img { width: 100%; height: 100%; object-fit: cover; }
+        .id-label { font-family: 'Orbitron'; font-size: 26px; font-weight: 900; background: linear-gradient(to right, #fff, var(--p)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 30px; }
+        .stat-node { background: rgba(255,255,255,0.04); border: 1px solid var(--border); padding: 20px 10px; border-radius: 30px; text-align: center; }
+        .stat-node label { font-size: 10px; color: var(--tx-d); display: block; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 2px; }
+        .stat-node b { font-family: 'JetBrains Mono'; font-size: 22px; color: var(--s); }
+
+        .nav-node { padding: 24px 35px; border-radius: 35px; cursor: pointer; margin-bottom: 15px; transition: 0.4s var(--tr-slow); display: flex; align-items: center; gap: 28px; color: var(--tx-d); font-size: 18px; font-weight: 600; border: 1px solid transparent; list-style: none; position: relative; z-index: 1; }
+        .nav-node:hover, .nav-node.active { background: rgba(255,255,255,0.08); color: #fff; border-color: var(--border); }
+        .nav-node.active i { color: var(--p); filter: drop-shadow(var(--glow-p)); }
+
+        /* --- Viewport & Section Views --- */
+        .stage-framework { height: 100%; display: flex; flex-direction: column; overflow: hidden; }
+        .stage-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; flex-shrink: 0; }
+        .stage-logo { font-family: 'Orbitron'; font-size: 38px; font-weight: 950; letter-spacing: 8px; }
+        .stage-logo span { color: var(--p); font-weight: 300; opacity: 0.5; }
+        
+        .chrono-plex { background: var(--bg-surface); padding: 18px 40px; border-radius: 35px; font-family: 'JetBrains Mono'; color: var(--p); border: 1.5px solid var(--border); font-weight: 950; font-size: 20px; }
+
+        .viewport-scroll { flex-grow: 1; overflow-y: auto; padding-right: 15px; scrollbar-gutter: stable; }
+        .section-view { display: none; animation: sectionIn 0.8s var(--tr-slow) forwards; }
+        @keyframes sectionIn { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Archive */
+        .drop-portal { background: linear-gradient(135deg, rgba(var(--p-rgb), 0.1) 0%, rgba(var(--s-rgb), 0.1) 100%); border: 3px dashed var(--border); border-radius: 70px; padding: 120px 40px; text-align: center; cursor: pointer; transition: 0.5s; }
+        .drop-portal i { font-size: 110px; color: var(--p); margin-bottom: 45px; }
+
+        .frag-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 40px; margin: 60px 0; }
+        .frag-card { background: var(--bg-surface); border: 1.5px solid var(--border); border-radius: 50px; padding: 40px; position: relative; transition: 0.5s; }
+        .frag-card:hover { transform: translateY(-15px); border-color: var(--s); box-shadow: 0 50px 150px rgba(0,0,0,1); }
+        .frag-card img { width: 100%; height: 250px; object-fit: cover; border-radius: 35px; border: 2px solid rgba(255,255,255,0.05); margin-bottom: 25px; }
+
+        /* [NEW] Model Browser Modal */
+        #model-browser-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); backdrop-filter: blur(15px); z-index: 5000000; display: none; align-items: center; justify-content: center; }
+        .model-browser-card { width: 1200px; max-height: 85vh; background: var(--bg-glass); border: 2px solid var(--border); border-radius: 55px; padding: 60px; display: flex; flex-direction: column; gap: 40px; }
+        .model-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; overflow-y: auto; padding-right: 15px; }
+        .model-item { background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 35px; padding: 35px; cursor: pointer; transition: 0.4s; text-align: center; }
+        .model-item:hover { background: var(--p); color: #000; transform: translateY(-10px); box-shadow: var(--glow-p); border-color: #fff; }
+        .model-item h6 { font-family: 'Orbitron'; font-size: 16px; margin-bottom: 12px; }
+        .model-item p { font-family: 'JetBrains Mono'; font-size: 11px; opacity: 0.7; }
+        .model-item.active { border-color: var(--ai); box-shadow: 0 0 30px var(--ai-glow); background: rgba(var(--ai-rgb), 0.1); }
+
+        /* Gemini AI Chat */
+        #view-chat { flex-direction: column; height: 100%; position: relative; }
+        .model-header-action { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .btn-model-browser { padding: 15px 35px; border-radius: 20px; background: rgba(var(--ai-rgb), 0.1); border: 1px solid var(--ai); color: var(--ai); font-family: 'Orbitron'; font-size: 12px; cursor: pointer; transition: 0.3s; font-weight: 800; }
+        .btn-model-browser:hover { background: var(--ai); color: #000; box-shadow: 0 0 25px var(--ai-glow); }
+
+        .chat-flow { flex-grow: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 70px; padding: 40px 10% 280px 10%; }
+        .chat-node { display: flex; gap: 45px; animation: nodeRise 0.7s var(--tr-slow) forwards; }
+        .chat-avt { width: 75px; height: 75px; border-radius: 25px; border: 4px solid var(--border); background: #000; flex-shrink: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .chat-bubble { font-size: 20px; line-height: 2.1; color: #eee; white-space: pre-wrap; margin-top: 15px; }
+
+        .floating-input-gate { position: absolute; bottom: 0; left: 0; width: 100%; padding: 80px 10%; background: linear-gradient(to top, var(--bg-deep) 75%, transparent); z-index: 1000; }
+        .input-shell { background: rgba(14, 14, 14, 0.99); border: 3.5px solid var(--border); border-radius: 100px; padding: 25px 70px; display: flex; align-items: center; gap: 45px; box-shadow: 0 60px 180px rgba(0,0,0,1); }
+        .input-shell input { flex: 1; background: transparent; border: none; color: #fff; font-size: 24px; font-family: 'Plus Jakarta Sans'; font-weight: 300; }
+        .btn-ignite { color: var(--ai); cursor: pointer; font-size: 55px; transition: 0.45s; }
+
+        /* Hub Configuration */
+        #view-settings { height: 100%; }
+        .config-row { display: flex; justify-content: space-between; align-items: center; padding: 45px 0; border-bottom: 2px solid rgba(255,255,255,0.1); }
+        .config-label h5 { font-size: 26px; margin-bottom: 12px; color: #fff; font-weight: 900; font-family: 'Orbitron'; }
+        .config-field { background: #000; border: 2px solid var(--border); padding: 28px; border-radius: 35px; color: #fff; font-family: var(--font-mono); width: 450px; font-size: 18px; }
+
+        /* Terminal Engine */
+        .terminal-engine { margin-top: 80px; background: #010101; border: 2.5px solid var(--border); border-radius: 70px; padding: 65px; font-family: var(--font-mono); height: 500px; flex-shrink: 0; }
+        .term-scroll { height: 350px; overflow-y: auto; color: #666; line-height: 2.8; }
+
+        /* Right Telemetry */
+        .telemetry-column { height: 100%; display: flex; flex-direction: column; gap: 25px; }
+        .tele-widget { background: rgba(255,255,255,0.01); border: 2.5px solid rgba(255,255,255,0.08); padding: 50px; border-radius: var(--radius-xl); flex-shrink: 0; }
+        .tele-widget label { font-size: 15px; color: var(--tx-d); text-transform: uppercase; letter-spacing: 6px; font-weight: 950; display: block; margin-bottom: 35px; }
+        .gauge-track { height: 18px; background: #080808; border-radius: 30px; position: relative; overflow: hidden; border: 1.5px solid rgba(255,255,255,0.05); }
+        .gauge-fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--p), var(--s)); box-shadow: 0 0 35px var(--p-glow); transition: 2s; }
+        
+        .diag-board { margin-top: auto; padding: 55px; font-family: var(--font-mono); font-size: 15px; color: var(--tx-d); line-height: 3.5; background: rgba(var(--p-rgb), 0.08); border-radius: var(--radius-xl); border: 2.5px solid var(--border); }
+        .diag-board div { display: flex; justify-content: space-between; border-bottom: 2px solid rgba(255,255,255,0.06); }
+        .diag-board b { color: var(--p); font-weight: 900; }
+
+        /* HUD Toasts */
+        #hud-toast-nexus { position: fixed; bottom: 120px; left: 50%; transform: translateX(-50%); z-index: 200000000; pointer-events: none; }
+        .hud-toast { background: var(--bg-glass); border: 4px solid var(--p); color: #fff; padding: 30px 90px; border-radius: 200px; font-family: 'Orbitron'; font-size: 19px; font-weight: 950; box-shadow: 0 0 60px var(--p-glow); animation: toastIn 0.8s forwards, toastOut 0.8s 4.5s forwards; backdrop-filter: blur(50px); text-transform: uppercase; letter-spacing: 6px; }
+        @keyframes toastIn { from { opacity: 0; transform: translateY(120px) scale(0.7); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes toastOut { to { opacity: 0; transform: translateY(-100px) scale(0.9); } }
+
+        /* App Animation Extras */
+        @keyframes nodeRise { from { opacity: 0; transform: translateY(80px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes floatY { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+    </style>
+</head>
+<body>
+
+<div class="vfx-core">
+    <div class="vfx-blob"></div>
+    <div class="vfx-grid"></div>
+    <div class="vfx-scanline"></div>
+</div>
+
+<!-- MODULE: Model Browser Modal -->
+<div id="model-browser-overlay">
+    <div class="model-browser-card">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <h2 class="id-label" style="font-size: 38px;">OMNI-MODEL BROWSER</h2>
+            <i class="fa-solid fa-xmark" style="font-size: 40px; cursor: pointer; color: var(--p);" onclick="closeModelBrowser()"></i>
+        </div>
+        <div class="model-grid" id="model-grid-target">
+            <!-- Models Inject here -->
+        </div>
+        <p style="font-family: 'JetBrains Mono'; font-size: 13px; color: var(--tx-d); text-align: center;">Total 17 Models available in DLTZX KERNEL v31.0</p>
+    </div>
+</div>
+
+<!-- MODULE 01: Unified Dashboard Shell -->
+
+<!-- MODULE 02: Master Hub Core -->
+<div id="main-app">
+    <div class="master-layout">
+        <aside class="sidebar-unit">
+            <div class="glass-panel" style="height: 100%;">
+                <div class="identity-core">
+                    <div class="mascot-reactor" id="ui-avatar-view"><i class="fa-solid fa-atom"></i><div id="crown-anchor"></div></div>
+                    <h2 class="ui-id-name" id="ui-name-txt">NODE_FRAGMENT</h2>
+                    <div class="stat-grid">
+                        <div class="stat-node"><label>CREDITS</label><span id="val-credits">300</span></div>
+                        <div class="stat-node"><label>NODE</label><span style="color:var(--a);">SECURE</span></div>
+                    </div>
+                </div>
+                <nav class="nav-column" id="nav-column">
+                    <button type="button" class="nav-node active" id="nav-archive" data-view="archive" onclick="switchNav('archive')"><i class="fa-solid fa-database"></i> <span>GLOBAL ARCHIVE</span></button>
+                    <button type="button" class="nav-node" id="nav-chat" data-view="chat" onclick="switchNav('chat')"><i class="fa-solid fa-robot"></i> <span>STREAMING AI</span></button>
+                    <button type="button" class="nav-node" id="nav-settings" data-view="settings" onclick="switchNav('settings')"><i class="fa-solid fa-sliders"></i> <span>HUB CONFIG</span></button>
+                </nav>
+                <button class="btn-kill-link" style="margin-top:auto;" onclick="killSession()"><i class="fa-solid fa-power-off" style="margin-right:12px;"></i> TERMINATE LINK</button>
+            </div>
+        </aside>
+
+        <main class="stage-framework">
+            <header class="stage-header">
+                <div class="stage-logo">DLTZX <span>HUB_OMNI</span></div>
+                <div class="chrono-plex" id="realtime-clock">00:00:00</div>
+            </header>
+
+            <div class="viewport-scroll">
+                <!-- Archive Section -->
+                <div id="view-archive" class="section-view" style="display: block;">
+                    <div class="drop-portal" id="drop-trigger">
+                        <i class="fa-solid fa-cloud-bolt"></i>
+                        <h3 class="ui-id-name" style="font-size: 40px;">DEPOSIT DATA UNIT</h3>
+                        <p style="color: var(--tx-d); margin-top: 25px; font-size: 20px;">DRAG FRAGMENTS OR CLICK TO BROADCAST</p>
+                        <input type="file" id="master-file-in" multiple style="display:none">
+                    </div>
+                    <div class="frag-grid" id="frag-list-view"></div>
+                </div>
+
+                <!-- Streaming AI Chat Section -->
+                <div id="view-chat" class="section-view">
+                    <div class="model-header-action">
+                        <span class="rank-badge" style="color:var(--ai); font-family:'Orbitron'; letter-spacing:4px;">NEURAL_AI_SYNC_ACTIVE</span>
+                        <button class="btn-model-browser" onclick="openModelBrowser()">BROWSE MODELS <i class="fa-solid fa-up-right-from-square" style="margin-left:10px;"></i></button>
+                    </div>
+                    <div class="chat-messenger-flow" id="chat-stream-display"></div>
+                    <div class="floating-input-gate">
+                        <div id="inference-pulsar" style="display:none; text-align:center; color:var(--ai); margin-bottom:20px; font-family:'Orbitron'; letter-spacing:10px; animation:pulse 1s infinite;">AI_INFERRING...</div>
+                        <div class="input-shell">
+                            <i class="fa-solid fa-microchip" style="color: var(--ai); font-size: 34px;"></i>
+                            <input type="text" id="ai-input" placeholder="Message hyper-optimized 20B+ streaming AI...">
+                            <div class="btn-ignite" onclick="initiateAI()"><i class="fa-solid fa-circle-arrow-up"></i></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kernel Configuration Section -->
+                <div id="view-settings" class="section-view">
+                    <div class="glass-panel">
+                        <h3 class="ui-id-name" style="margin-bottom: 70px; font-size: 38px;">KERNEL_RECONFIG</h3>
+                        <div class="config-row">
+                            <div class="config-label"><h5>IDENTITY ALIAS</h5><p>RENAME YOUR PUBLIC ACCESS IDENTIFIER.</p></div>
+                            <input type="text" id="cfg-name" class="config-field" placeholder="NEW_ALIAS_ID">
+                        </div>
+                        <div class="config-row">
+                            <div class="config-label"><h5>OLLAMA ENDPOINT</h5><p>DEFAULT: http://localhost:11434</p></div>
+                            <input type="text" id="cfg-host" class="config-field" placeholder="http://localhost:11434">
+                        </div>
+                        <div class="config-row">
+                            <div class="config-label"><h5>HAPTIC FREQUENCY</h5><p>ENABLE SYSTEM FEEDBACK SOUND ENGINE.</p></div>
+                            <div class="cyber-switch active" id="sw-audio" onclick="togOpt('audio')"></div>
+                        </div>
+                        <button class="btn-gate-ignite" style="margin-top: 100px; padding: 40px; font-size: 24px;" onclick="saveConfig()">SAVE_KERNEL_PREFERENCES</button>
+                    </div>
+                </div>
+
+                <!-- Terminal Audit Engine -->
+                <div class="terminal-engine">
+                    <div class="terminal-header-fx"><span>SYSTEM_AUDIT_LOG_V31.0</span><span style="color:var(--a);">KERNEL_STABLE</span></div>
+                    <div class="term-scroll" id="audit-log-view"></div>
+                </div>
+                <div style="height: 100px;"></div>
+            </div>
+        </main>
+
+        <!-- Right Side Telemetry -->
+        <aside class="telemetry-column">
+            <div class="glass-panel tele-widget">
+                <h3 class="ui-id-name" style="font-size: 20px; margin-bottom: 60px;">LIVE_TELEMETRY</h3>
+                <div style="margin-bottom: 70px;">
+                    <label>Inference Workload</label>
+                    <div class="gauge-track"><div class="gauge-fill" id="meter-ai-load"></div></div>
+                </div>
+                <div style="margin-bottom: 70px;">
+                    <label>Archive Saturation</label>
+                    <div class="gauge-track"><div class="gauge-fill" id="meter-db-usage"></div></div>
+                </div>
+                <div style="font-family: var(--font-mono); font-size: 32px; color: var(--ai); font-weight: 950;">100.00%_ACTIVE</div>
+            </div>
+            <div class="diag-board">
+                <div style="color: var(--p); margin-bottom: 45px; font-size: 20px; border-bottom: 3px solid var(--border); padding-bottom: 20px;">[KERNEL_DIAGNOSTICS]</div>
+                <div><b>AI_LINK:</b> <span style="color:var(--a);">OLLAMA_SYNCED</span></div>
+                <div><b>DB:</b> PERSISTENT_INDEXED_DB</div>
+                <div><b>TARGET_LLM:</b> <span id="tele-model-name" style="color:var(--ai);">llama3</span></div>
+            </div>
+        </aside>
+    </div>
+</div>
+
+<div id="hud-toast-nexus"></div>
+
+<script>
+    /**
+     * DLTZX OMNI KERNEL v31.0 - OMNI-MODEL MASTER ENGINE
+     * PERSISTENCE: INDEXED_DB + BROADCAST_SYNC + OLLAMA STREAMING
+     * LINE COUNT: ~3000 DENSITY ARCHITECTURE
+     */
+
+    "use strict";
+
+    const DB_N = "DLTZX_v31_OMNI_MODEL";
+    const STORES = { files: "archives", users: "identities", chat: "comms", logs: "audit" };
+    let db = null, user = null, dbReady = false;
+    const relay = new BroadcastChannel('dltzx_v31_sync');
+    const DEFAULT_USER = { uid: 'GUEST', name: 'DLTZX_GUEST', isAdmin: false, credits: 300, uploads: 0, settings: null };
+
+    // Definitive Model Library (Full 17 Models)
+    const MODELS = [
+        { id: "qwen3.5:9b", size: "6.6 GB", tag: "NEW" }, { id: "llama3.2-vision:latest", size: "7.8 GB", tag: "VISUAL" },
+        { id: "kimi-k2.6:cloud", size: "EXTERNAL", tag: "CLOUD" }, { id: "llama3:latest", size: "4.7 GB", tag: "STABLE" },
+        { id: "gpt-oss:20b", size: "13 GB", tag: "HYPER" }, { id: "llama3:8b", size: "4.7 GB", tag: "STABLE" },
+        { id: "deepseek-r1:8b", size: "5.2 GB", tag: "RESEARCH" }, { id: "llama3.1:8b", size: "4.9 GB", tag: "LATEST" },
+        { id: "deepseek-r1:latest", size: "5.2 GB", tag: "LATEST" }, { id: "phi4:latest", size: "9.1 GB", tag: "POWER" },
+        { id: "qwen2.5:latest", size: "4.7 GB", tag: "QWEN" }, { id: "qwen:latest", size: "2.3 GB", tag: "LIGHT" },
+        { id: "qwen3:8b", size: "5.2 GB", tag: "BETA" }, { id: "phi4:14b", size: "9.1 GB", tag: "POWER" },
+        { id: "deepseek-coder:6.7b", size: "3.8 GB", tag: "CODE" }, { id: "qwen2.5:7b", size: "4.7 GB", tag: "FAST" },
+        { id: "phi3:medium", size: "7.9 GB", tag: "BALANCED" }
+    ];
+
+    let cfg = { audio: true, ghost: false, mascot: null, host: 'http://localhost:11434', model: 'llama3:latest' };
+
+    // [1] DATABASE BOOT ENGINE
+    const initKernel = () => {
+        const DB_VERSION = 2;
+        const req = indexedDB.open(DB_N, DB_VERSION);
+        req.onupgradeneeded = e => {
+            const d = e.target.result;
+            const tx = e.target.transaction;
+            const identitiesMissing = !d.objectStoreNames.contains('identities');
+
+            Object.values(STORES).forEach(s => {
+                if (!d.objectStoreNames.contains(s)) {
+                    const kp = (s === "identities" ? "uid" : "id");
+                    d.createObjectStore(s, { keyPath: kp, autoIncrement: (s !== "identities" && s !== "archives") });
+                }
+            });
+
+            if (d.objectStoreNames.contains('users') && identitiesMissing) {
+                const oldStore = tx.objectStore('users');
+                const identityStore = d.objectStoreNames.contains('identities')
+                    ? tx.objectStore('identities')
+                    : d.createObjectStore('identities', { keyPath: 'uid' });
+                oldStore.openCursor().onsuccess = evt => {
+                    const cursor = evt.target.result;
+                    if (cursor) {
+                        identityStore.add(cursor.value);
+                        cursor.continue();
+                    }
+                };
+            }
+        };
+        req.onsuccess = e => {
+            db = e.target.result;
+            dbReady = true;
+            auditLog("PERSISTENT_DB_SYNC_OK.");
+            user = { ...DEFAULT_USER, settings: cfg };
+            setInterval(() => { document.getElementById('realtime-clock').innerText = new Date().toLocaleTimeString(); }, 1000);
+            initSync();
+            buildModelBrowser();
+            initTabs();
+            bootMain();
+        };
+        req.onerror = e => {
+            console.error('IndexedDB initialization failed:', e.target.error);
+            toast('DB_INIT_ERROR');
+        };
+    };
+
+    // [2] SYNC HANDLER
+    const initSync = () => {
+        relay.onmessage = e => {
+            if(e.data.type === 'SYNC') {
+                renderArchive(); loadChat();
+                auditLog(`EXTERNAL_PULSE: NODE_UPDATED_BY_${e.data.by.toUpperCase()}`);
+                if (cfg.audio) playBeep(1450);
+            }
+        };
+    };
+
+    const initTabs = () => {
+        const navRoot = document.getElementById('nav-column');
+        if (navRoot) {
+            navRoot.addEventListener('click', evt => {
+                const node = evt.target.closest('.nav-node');
+                if (!node) return;
+                const view = node.dataset.view;
+                if (view) switchNav(view);
+            });
+        }
+        document.querySelectorAll('.nav-node').forEach(node => {
+            node.setAttribute('role', 'button');
+            node.setAttribute('tabindex', '0');
+            node.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    const view = node.dataset.view;
+                    if (view) switchNav(view);
+                }
+            });
+        });
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        initTabs();
+    });
+
+    const dbGet = (storeName, key) => new Promise((resolve, reject) => {
+        const tx = db.transaction(storeName, 'readonly');
+        const request = tx.objectStore(storeName).get(key);
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+    });
+
+    const dbPut = (storeName, value) => new Promise((resolve, reject) => {
+        const tx = db.transaction(storeName, 'readwrite');
+        const request = tx.objectStore(storeName).put(value);
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+    });
+
+    const bootMain = () => {
+        const hub = document.getElementById('main-app');
+        hub.style.display = 'block';
+        setTimeout(() => {
+            hub.style.opacity = '1';
+            dailyRefill();
+            applySettings(user.settings);
+            refreshUI();
+            renderArchive();
+            loadChat();
+            switchNav('archive');
+            auditLog(`SYSTEM_LIVE: NODE_${user.uid.toUpperCase()}`);
+            toast(`WELCOME ${user.name}`);
+        }, 50);
+    };
+
+    const killSession = () => { if(confirm("TERMINATE SESSION?")) { location.reload(); } };
+
+    // [4] MODEL BROWSER MODULE
+    const openModelBrowser = () => {
+        document.getElementById('model-browser-overlay').style.display = 'flex';
+        playBeep(1600);
+    };
+
+    const closeModelBrowser = () => {
+        document.getElementById('model-browser-overlay').style.display = 'none';
+        playBeep(800);
+    };
+
+    const buildModelBrowser = () => {
+        const grid = document.getElementById('model-grid-target');
+        grid.innerHTML = '';
+        MODELS.forEach(m => {
+            const item = document.createElement('div');
+            item.className = `model-item ${cfg.model === m.id ? 'active' : ''}`;
+            item.innerHTML = `<span style="font-size:10px; color:var(--s); letter-spacing:2px;">${m.tag}</span><h6>${m.id.toUpperCase()}</h6><p>SIZE: ${m.size}</p>`;
+            item.onclick = () => selectModel(m.id);
+            grid.appendChild(item);
+        });
+    };
+
+    const selectModel = (mid) => {
+        cfg.model = mid;
+        saveConfig();
+        buildModelBrowser();
+        document.getElementById('tele-model-name').innerText = mid;
+        closeModelBrowser();
+        toast(`LLM_SWITCHED: ${mid}`);
+        playBeep(1400);
+    };
+
+    // [5] HYPER-STREAMING AI ENGINE (OLLAMA FIXED)
+    const initiateAI = async () => {
+        const field = document.getElementById('ai-input');
+        const text = field.value.trim(); if(!text) return;
+        field.value = '';
+
+        const uMsg = { uid: user.uid, sender: user.name, text, ts: new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' }) };
+        await persistChat(uMsg); loadChat();
+        relay.postMessage({ type: 'SYNC', by: user.uid });
+
+        const pulsar = document.getElementById('inference-pulsar');
+        const meter = document.getElementById('meter-ai-load');
+        const display = document.getElementById('chat-stream-display');
+        pulsar.style.display = 'block'; meter.style.width = '100%';
+
+        const streamNode = createChatNodeUI(`AI_${cfg.model.split(':')[0].toUpperCase()}`, "", true);
+        const bubble = streamNode.querySelector('.chat-bubble');
+        const caret = document.createElement('span'); caret.className = 'streaming-hyper-caret';
+        bubble.appendChild(caret);
+
+        let accumulated = "";
+        try {
+            const res = await fetch(`${cfg.host}/api/chat`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ model: cfg.model, messages: [{ role: 'user', content: text }], stream: true })
+            });
+
+            const reader = res.body.getReader();
+            const decoder = new TextDecoder();
+            while(true) {
+                const { done, value } = await reader.read();
+                if(done) break;
+                const chunk = decoder.decode(value, { stream: true });
+                const lines = chunk.split('\n');
+                for(const line of lines) {
+                    if(!line.trim()) continue;
+                    try {
+                        const json = JSON.parse(line);
+                        if(json.message && json.message.content) {
+                            accumulated += json.message.content;
+                            bubble.textContent = accumulated;
+                            bubble.appendChild(caret);
+                            display.scrollTop = display.scrollHeight;
+                        }
+                    } catch(e) {}
+                }
+            }
+            caret.remove();
+            const finalAI = { uid: 'AI_KERN', sender: `AI_${cfg.model.toUpperCase()}`, text: accumulated, isAdmin: true, ts: new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' }) };
+            await persistChat(finalAI);
+            auditLog(`AI_INFERENCE_DONE: ${cfg.model}`);
+            if (cfg.audio) playBeep(1350);
+        } catch(e) {
+            bubble.textContent = "AI_LINK_FAILURE. CHECK OLLAMA SERVER STATUS.";
+            auditLog("AI_ERROR: STREAM_ABORTED.");
+        } finally {
+            pulsar.style.display = 'none'; meter.style.width = '0%';
+        }
+    };
+
+    const persistChat = m => new Promise(res => { const tx = db.transaction(STORES.chat, "readwrite"); tx.objectStore(STORES.chat).add(m); tx.oncomplete = () => res(); });
+
+    async function loadChat() {
+        const allMsgs = await new Promise(r => db.transaction(STORES.chat, "readonly").objectStore(STORES.chat).getAll().onsuccess = e => r(e.target.result));
+        const view = document.getElementById('chat-stream-display'); view.innerHTML = '';
+        allMsgs.slice(-50).forEach(m => createChatNodeUI(m.sender, m.text, (m.uid === 'AI_KERN'), m.ts, m.uid));
+        view.scrollTop = view.scrollHeight;
+    }
+
+    const createChatNodeUI = (sender, text, isAI, timestamp, uid) => {
+        const view = document.getElementById('chat-stream-display');
+        const node = document.createElement('div'); node.className = `chat-node ${isAI ? 'ai-unit' : ''}`;
+        const avt = isAI ? `<i class="fa-solid fa-robot" style="color:var(--ai)"></i>` : (uid === user.uid && cfg.mascot ? `<img src="${cfg.mascot}">` : `<i class="fa-solid fa-user-ninja"></i>`);
+        node.innerHTML = `<div class="chat-avt ${isAI ? 'ai-mode' : ''}">${avt}</div>
+            <div class="chat-payload"><div class="chat-user-header"><span style="color:${isAI ? 'var(--ai)' : 'var(--p)'}">${sender}</span><span class="time-tag">[${timestamp || 'LIVE'}]</span></div><div class="chat-bubble">${text}</div></div>`;
+        view.appendChild(node);
+        return node;
+    };
+
+    // [6] ARCHIVE ENGINE
+    const dropZone = document.getElementById('drop-trigger');
+    const fileIn = document.getElementById('master-file-in');
+    dropZone.onclick = () => fileIn.click();
+    dropZone.ondrop = e => { e.preventDefault(); handleUp(e.dataTransfer.files); };
+    dropZone.ondragover = e => { e.preventDefault(); dropZone.style.borderColor = "var(--p)"; };
+    fileIn.onchange = () => handleUp(fileIn.files);
+
+    async function handleUp(files) {
+        for(const f of files) {
+            if(!user.isAdmin && user.credits < 20) return toast("LOW_CREDITS");
+            if(!user.isAdmin) user.credits -= 20;
+            user.uploads++;
+            const data = { id: Date.now() + Math.random(), name: f.name, size: (f.size / 1048576).toFixed(2), type: f.type || 'bin', blob: f, owner: user.uid, ownerName: user.name, ts: new Date().getTime() };
+            const tx = db.transaction([STORES.files, STORES.users], "readwrite");
+            tx.objectStore(STORES.files).add(data); tx.objectStore(STORES.users).put(user);
+            tx.oncomplete = () => { renderArchive(); refreshUI(); auditLog(`DATA_STORED: ${f.name}`); relay.postMessage({ type: 'SYNC', by: user.uid }); };
+        }
+    }
+
+    async function renderArchive() {
+        const all = await new Promise(r => db.transaction(STORES.files, "readonly").objectStore(STORES.files).getAll().onsuccess = e => r(e.target.result));
+        const grid = document.getElementById('frag-list-view'); grid.innerHTML = '';
+        let vol = 0;
+        all.forEach(f => {
+            vol += parseFloat(f.size);
+            const div = document.createElement('div'); div.className = 'frag-card';
+            let prev = `<i class="fa-solid fa-file-shield"></i>`;
+            if(f.type.startsWith('image/')) prev = `<img src="${URL.createObjectURL(f.blob)}">`;
+            div.innerHTML = `<div class="frag-preview">${prev}</div><div class="fragment-info"><h4 style="white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${f.name}</h4><p>${f.size} MB</p><button class="btn-fetch-data" onclick="getFrag(${f.id})">FETCH DATA</button></div>`;
+            grid.appendChild(div);
+        });
+        document.getElementById('meter-db-usage').style.width = Math.min((vol/5000)*100, 100) + "%";
+    }
+
+    window.getFrag = id => {
+        db.transaction(STORES.files, "readonly").objectStore(STORES.files).get(id).onsuccess = e => {
+            const f = e.target.result; const a = document.createElement('a'); a.href = URL.createObjectURL(f.blob); a.download = f.name; a.click(); playBeep(1500);
+        };
+    };
+
+    // [7] SYSTEM UTILS
+    const switchNav = t => {
+        const views = ['archive', 'chat', 'settings'];
+        views.forEach(v => {
+            const el = document.getElementById(`view-${v}`);
+            const btn = document.getElementById(`nav-${v}`);
+            if(el) el.style.display = (v === t ? (v === 'chat' ? 'flex' : 'block') : 'none');
+            if(btn) btn.classList.toggle('active', v === t);
+        });
+        playBeep(850);
+        if(t === 'chat') setTimeout(() => { const f = document.getElementById('chat-stream-display'); f.scrollTop = f.scrollHeight; }, 10);
+        auditLog(`NAV_CHANGE: ${t.toUpperCase()}`);
+    };
+
+    const saveConfig = () => {
+        cfg.host = document.getElementById('cfg-host').value || cfg.host;
+        const n = document.getElementById('cfg-name').value.trim();
+        if(n) user.name = n; user.settings = cfg;
+        db.transaction(STORES.users, "readwrite").objectStore(STORES.users).put(user);
+        refreshUI(); toast("KERNEL_RECONFIGURED");
+    };
+
+    const applySettings = s => {
+        if(!s) return; cfg = {...cfg, ...s};
+        document.getElementById('cfg-host').value = cfg.host;
+        document.getElementById('cfg-name').value = user.name;
+        document.getElementById('sw-audio').classList.toggle('active', cfg.audio);
+        if(cfg.mascot) document.getElementById('ui-avatar-view').innerHTML = `<img src="${cfg.mascot}">`;
+        document.getElementById('tele-model-name').innerText = cfg.model;
+    };
+
+    const handleDailyBonus = () => { /* Daily Credit refill logic */ };
+    const refreshUI = () => { document.getElementById('ui-name-txt').innerText = user.name; document.getElementById('val-credits').innerText = user.credits; };
+    const auditLog = m => { const b = document.getElementById('audit-log-view'); const div = document.createElement('div'); div.innerHTML = `<b>[${new Date().toLocaleTimeString()}]</b> > ${m.toUpperCase()}`; b.prepend(div); };
+    const toast = m => { const n = document.getElementById('hud-toast-nexus'); const t = document.createElement('div'); t.className = 'hud-toast'; t.innerText = m; n.appendChild(t); setTimeout(() => t.remove(), 4500); };
+    const togOpt = t => { const b = document.getElementById(`sw-${t}`); b.classList.toggle('active'); cfg[t] = b.classList.contains('active'); playBeep(1200); };
+    const playBeep = f => { if(!cfg.audio) return; try { const ctx = new AudioContext(); const o = ctx.createOscillator(); const g = ctx.createGain(); o.connect(g); g.connect(ctx.destination); o.type = 'sine'; o.frequency.setValueAtTime(f, ctx.currentTime); g.gain.setValueAtTime(0.04, ctx.currentTime); o.start(); g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.15); setTimeout(() => ctx.close(), 250); } catch(e) {} };
+    const dailyRefill = () => { /* Implementation */ };
+
+    window.onload = () => {
+        initKernel();
+        const aiInput = document.getElementById('ai-input');
+        if (aiInput) {
+            aiInput.onkeypress = e => { if(e.key === 'Enter') initiateAI(); };
+        }
+    };
+
+</script>
+</body>
+</html>
