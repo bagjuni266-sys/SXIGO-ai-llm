@@ -1,0 +1,247 @@
+
+============================================================
+           SXIGO AI Server v1.0.0
+============================================================
+  Ollama  : http://localhost:11434
+  HTML    : C:\Users\gamju\AppData\Local\Temp\opencode\SXIGOai.html
+  DB      : C:\Users\gamju\.sxigo\sxigo_data.db
+  Model   : llama3
+  Auth    : Disabled
+  Logs    : C:\Users\gamju\.sxigo\logs\session_20260531_215749.log
+  Listen  : 0.0.0.0:8765
+  Web     : http://localhost:8765
+  Web     : http://127.0.0.1:8765
+============================================================
+
+  >>> Open your browser and go to: http://localhost:8765 <<<
+
+2026-05-31 21:57:49,838 [INFO] Database initialized at C:\Users\gamju\.sxigo\sxigo_data.db
+2026-05-31 21:57:49,848 [INFO] SXIGO AI Server starting...
+2026-05-31 21:57:49,857 [INFO] Python: 3.14.4
+2026-05-31 21:57:49,924 [INFO] Platform: Windows 11
+2026-05-31 21:57:49,932 [INFO] Ollama: http://localhost:11434
+2026-05-31 21:58:23,597 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:58:23,608 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:58:23,640 [INFO] [GET] /api/models -> 200 (1.129s)
+INFO:     127.0.0.1:49307 - "GET /api/models HTTP/1.1" 200 OK
+2026-05-31 21:58:23,659 [INFO] [GET] /api/health -> 200 (6.114s)
+INFO:     127.0.0.1:54555 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 21:58:24,792 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:58:24,803 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:58:24,815 [INFO] [GET] /api/models -> 200 (1.137s)
+INFO:     127.0.0.1:61816 - "GET /api/models HTTP/1.1" 200 OK
+2026-05-31 21:58:24,832 [INFO] [GET] /api/health -> 200 (0.755s)
+INFO:     127.0.0.1:49307 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 21:58:25,914 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:58:25,924 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:58:25,935 [INFO] [GET] /api/models -> 200 (1.080s)
+INFO:     127.0.0.1:54555 - "GET /api/models HTTP/1.1" 200 OK
+2026-05-31 21:58:25,953 [INFO] [GET] /api/health -> 200 (0.734s)
+INFO:     127.0.0.1:61816 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 21:58:27,140 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:58:27,152 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:58:27,164 [INFO] [GET] /api/health -> 200 (0.752s)
+INFO:     127.0.0.1:54555 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 21:58:27,182 [INFO] [GET] /api/models -> 200 (1.211s)
+INFO:     127.0.0.1:49307 - "GET /api/models HTTP/1.1" 200 OK
+2026-05-31 21:58:28,295 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:58:28,305 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:58:28,316 [INFO] [GET] /api/models -> 200 (0.689s)
+INFO:     127.0.0.1:54555 - "GET /api/models HTTP/1.1" 200 OK
+2026-05-31 21:58:28,333 [INFO] [GET] /api/health -> 200 (1.135s)
+INFO:     127.0.0.1:61816 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 21:58:29,026 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:58:29,036 [INFO] [GET] /api/health -> 200 (0.683s)
+INFO:     127.0.0.1:54555 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 21:58:29,742 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:58:29,828 [INFO] [GET] /api/health -> 200 (0.774s)
+INFO:     127.0.0.1:61816 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 21:58:30,649 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:58:30,688 [INFO] [GET] /api/health -> 200 (0.701s)
+INFO:     127.0.0.1:54555 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 21:58:31,376 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:58:31,388 [INFO] [GET] /api/health -> 200 (0.682s)
+INFO:     127.0.0.1:61816 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 21:58:32,062 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:58:32,077 [INFO] [GET] /api/health -> 200 (0.667s)
+INFO:     127.0.0.1:54555 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 21:59:18,480 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:59:18,495 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:59:18,506 [INFO] [GET] /api/models -> 200 (0.702s)
+INFO:     127.0.0.1:53298 - "GET /api/models HTTP/1.1" 200 OK
+2026-05-31 21:59:18,523 [INFO] [GET] /api/health -> 200 (1.123s)
+INFO:     127.0.0.1:51682 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 21:59:19,621 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:59:19,631 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:59:19,641 [INFO] [GET] /api/health -> 200 (0.692s)
+INFO:     127.0.0.1:53298 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 21:59:19,658 [INFO] [GET] /api/models -> 200 (1.118s)
+INFO:     127.0.0.1:59428 - "GET /api/models HTTP/1.1" 200 OK
+2026-05-31 21:59:20,752 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:59:20,762 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:59:20,772 [INFO] [GET] /api/health -> 200 (1.096s)
+INFO:     127.0.0.1:51682 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 21:59:20,789 [INFO] [GET] /api/models -> 200 (0.726s)
+INFO:     127.0.0.1:53298 - "GET /api/models HTTP/1.1" 200 OK
+2026-05-31 21:59:21,890 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:59:21,903 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:59:21,917 [INFO] [GET] /api/health -> 200 (1.111s)
+INFO:     127.0.0.1:59428 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 21:59:21,933 [INFO] [GET] /api/models -> 200 (0.722s)
+INFO:     127.0.0.1:51682 - "GET /api/models HTTP/1.1" 200 OK
+2026-05-31 21:59:23,017 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:59:23,026 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:59:23,037 [INFO] [GET] /api/models -> 200 (0.701s)
+INFO:     127.0.0.1:59428 - "GET /api/models HTTP/1.1" 200 OK
+2026-05-31 21:59:23,057 [INFO] [GET] /api/health -> 200 (1.107s)
+INFO:     127.0.0.1:53298 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 21:59:23,740 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:59:23,750 [INFO] [GET] /api/health -> 200 (0.675s)
+INFO:     127.0.0.1:59428 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 21:59:24,400 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:59:24,409 [INFO] [GET] /api/health -> 200 (0.642s)
+INFO:     127.0.0.1:53298 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 21:59:25,126 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:59:25,137 [INFO] [GET] /api/health -> 200 (0.710s)
+INFO:     127.0.0.1:59428 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 21:59:25,800 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:59:25,822 [INFO] [GET] /api/health -> 200 (0.668s)
+INFO:     127.0.0.1:53298 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 21:59:26,539 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 21:59:26,547 [INFO] [GET] /api/health -> 200 (0.702s)
+INFO:     127.0.0.1:59428 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:00:18,420 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:00:18,429 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:00:18,441 [INFO] [GET] /api/models -> 200 (0.664s)
+INFO:     127.0.0.1:50461 - "GET /api/models HTTP/1.1" 200 OK
+2026-05-31 22:00:18,458 [INFO] [GET] /api/health -> 200 (1.076s)
+INFO:     127.0.0.1:59404 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:00:19,495 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:00:19,504 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:00:19,515 [INFO] [GET] /api/models -> 200 (1.038s)
+INFO:     127.0.0.1:54137 - "GET /api/models HTTP/1.1" 200 OK
+2026-05-31 22:00:19,532 [INFO] [GET] /api/health -> 200 (0.681s)
+INFO:     127.0.0.1:50461 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:00:20,628 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:00:20,639 [INFO] [GET] /api/health -> 200 (0.691s)
+INFO:     127.0.0.1:54137 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:00:20,657 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:00:21,079 [INFO] [GET] /api/models -> 200 (1.529s)
+INFO:     127.0.0.1:59404 - "GET /api/models HTTP/1.1" 200 OK
+2026-05-31 22:00:21,476 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:00:21,486 [INFO] [GET] /api/health -> 200 (0.819s)
+INFO:     127.0.0.1:50461 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:00:21,937 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:00:21,947 [INFO] [GET] /api/models -> 200 (0.848s)
+INFO:     127.0.0.1:54137 - "GET /api/models HTTP/1.1" 200 OK
+2026-05-31 22:00:22,451 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:00:22,462 [INFO] [GET] /api/health -> 200 (0.958s)
+INFO:     127.0.0.1:59404 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:00:22,909 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:00:22,923 [INFO] [GET] /api/models -> 200 (0.959s)
+INFO:     127.0.0.1:50461 - "GET /api/models HTTP/1.1" 200 OK
+2026-05-31 22:00:23,175 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:00:23,185 [INFO] [GET] /api/health -> 200 (0.704s)
+INFO:     127.0.0.1:54137 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:00:23,830 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:00:23,839 [INFO] [GET] /api/health -> 200 (0.636s)
+INFO:     127.0.0.1:50461 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:00:24,462 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:00:24,472 [INFO] [GET] /api/health -> 200 (0.614s)
+INFO:     127.0.0.1:54137 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:00:25,151 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:00:25,162 [INFO] [GET] /api/health -> 200 (0.673s)
+INFO:     127.0.0.1:50461 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:00:25,823 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:00:25,834 [INFO] [GET] /api/health -> 200 (0.654s)
+INFO:     127.0.0.1:54137 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:01:18,474 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:01:18,483 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:01:18,494 [INFO] [GET] /api/health -> 200 (1.098s)
+INFO:     127.0.0.1:63215 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:01:18,511 [INFO] [GET] /api/models -> 200 (1.114s)
+INFO:     127.0.0.1:63941 - "GET /api/models HTTP/1.1" 200 OK
+2026-05-31 22:01:19,545 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:01:19,556 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:01:19,565 [INFO] [GET] /api/health -> 200 (1.037s)
+INFO:     127.0.0.1:53426 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:01:19,582 [INFO] [GET] /api/models -> 200 (0.679s)
+INFO:     127.0.0.1:63215 - "GET /api/models HTTP/1.1" 200 OK
+2026-05-31 22:01:20,657 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:01:20,666 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:01:20,677 [INFO] [GET] /api/models -> 200 (0.686s)
+INFO:     127.0.0.1:53426 - "GET /api/models HTTP/1.1" 200 OK
+2026-05-31 22:01:20,694 [INFO] [GET] /api/health -> 200 (1.092s)
+INFO:     127.0.0.1:63941 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:01:21,781 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:01:21,791 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:01:21,803 [INFO] [GET] /api/models -> 200 (1.087s)
+INFO:     127.0.0.1:63215 - "GET /api/models HTTP/1.1" 200 OK
+2026-05-31 22:01:21,820 [INFO] [GET] /api/health -> 200 (0.707s)
+INFO:     127.0.0.1:53426 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:01:22,896 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:01:22,905 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:01:22,916 [INFO] [GET] /api/health -> 200 (0.670s)
+INFO:     127.0.0.1:63215 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:01:22,933 [INFO] [GET] /api/models -> 200 (1.094s)
+INFO:     127.0.0.1:63941 - "GET /api/models HTTP/1.1" 200 OK
+2026-05-31 22:01:23,664 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:01:23,674 [INFO] [GET] /api/health -> 200 (0.723s)
+INFO:     127.0.0.1:53426 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:01:24,359 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:01:24,369 [INFO] [GET] /api/health -> 200 (0.677s)
+INFO:     127.0.0.1:63941 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:01:25,072 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:01:25,084 [INFO] [GET] /api/health -> 200 (0.697s)
+INFO:     127.0.0.1:53426 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:01:25,760 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:01:25,771 [INFO] [GET] /api/health -> 200 (0.669s)
+INFO:     127.0.0.1:63941 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:01:26,469 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:01:26,480 [INFO] [GET] /api/health -> 200 (0.691s)
+INFO:     127.0.0.1:53426 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:02:18,408 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:02:18,434 [INFO] [GET] /api/health -> 200 (1.045s)
+INFO:     127.0.0.1:52093 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:02:19,050 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:02:19,062 [INFO] [GET] /api/models -> 200 (1.176s)
+INFO:     127.0.0.1:59857 - "GET /api/models HTTP/1.1" 200 OK
+2026-05-31 22:02:19,555 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:02:19,569 [INFO] [GET] /api/health -> 200 (1.083s)
+INFO:     127.0.0.1:65525 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:02:20,045 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:02:20,056 [INFO] [GET] /api/models -> 200 (0.975s)
+INFO:     127.0.0.1:52093 - "GET /api/models HTTP/1.1" 200 OK
+2026-05-31 22:02:20,308 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:02:20,341 [INFO] [GET] /api/health -> 200 (0.754s)
+INFO:     127.0.0.1:59857 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:02:21,545 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:02:21,559 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:02:21,570 [INFO] [GET] /api/models -> 200 (1.211s)
+INFO:     127.0.0.1:65525 - "GET /api/models HTTP/1.1" 200 OK
+2026-05-31 22:02:21,587 [INFO] [GET] /api/health -> 200 (0.768s)
+INFO:     127.0.0.1:52093 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:02:22,749 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:02:22,764 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:02:22,775 [INFO] [GET] /api/models -> 200 (1.170s)
+INFO:     127.0.0.1:59857 - "GET /api/models HTTP/1.1" 200 OK
+2026-05-31 22:02:22,792 [INFO] [GET] /api/health -> 200 (0.759s)
+INFO:     127.0.0.1:65525 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:02:24,102 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:02:24,111 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:02:24,123 [INFO] [GET] /api/health -> 200 (0.865s)
+INFO:     127.0.0.1:59857 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:02:24,140 [INFO] [GET] /api/models -> 200 (1.330s)
+INFO:     127.0.0.1:52093 - "GET /api/models HTTP/1.1" 200 OK
+2026-05-31 22:02:24,969 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:02:24,980 [INFO] [GET] /api/health -> 200 (0.822s)
+INFO:     127.0.0.1:65525 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:02:25,789 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:02:25,800 [INFO] [GET] /api/health -> 200 (0.802s)
+INFO:     127.0.0.1:52093 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:02:26,469 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:02:26,480 [INFO] [GET] /api/health -> 200 (0.662s)
+INFO:     127.0.0.1:65525 - "GET /api/health HTTP/1.1" 200 OK
+2026-05-31 22:02:27,263 [INFO] HTTP Request: GET http://localhost:11434/api/tags "HTTP/1.1 200 OK"
+2026-05-31 22:02:27,273 [INFO] [GET] /api/health -> 200 (0.775s)
+INFO:     127.0.0.1:52093 - "GET /api/health HTTP/1.1" 200 OK

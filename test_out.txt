@@ -1,0 +1,5 @@
+2026-05-31 21:01:15,397 [INFO] Database initialized at C:\Users\gamju\.sxigo\sxigo_data.db
+2026-05-31 21:01:15,403 [INFO] SXIGO AI Server starting...
+2026-05-31 21:01:15,408 [INFO] Python: 3.14.4
+2026-05-31 21:01:15,463 [INFO] Platform: Windows 11
+2026-05-31 21:01:15,473 [INFO] Ollama: http://localhost:11434
